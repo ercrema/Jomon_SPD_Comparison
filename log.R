@@ -44,8 +44,8 @@ legend(x=134,y=40.91,legend=c("Aomori","Hokkaido","Kanto"),col=c(2,1,4),pch=20,c
 #############################
 ### Retreive Sample Sizes ###
 #############################
-nrow(c14dates) #Total Sample Size (n=871)
-table(c14dates$Region) #Number of 14C Dates per Region (1=Kanto (n=276) ; 2=Aomori (n=263); 3=Hokkaido (n=332))
+nrow(c14dates) #Total Sample Size (n=867)
+table(c14dates$Region) #Number of 14C Dates per Region (1=Kanto (n=276) ; 2=Aomori (n=259); 3=Hokkaido (n=332))
 
 c14dates.kanto=subset(c14dates,Region==1)
 c14dates.aomori=subset(c14dates,Region==2)
@@ -82,7 +82,7 @@ exp.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,sd=c14dates.kanto$
     marine=rep(FALSE,nrow(c14dates.kanto)),DeltaR=rep(NA,nrow(c14dates.kanto)),DeltaRsd=rep(NA,nrow(c14dates.kanto)),
     yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
-##save.image("./part1.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
+save.image("./part1.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
 
 ### Aomori ###
 
@@ -96,7 +96,7 @@ exp.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,sd=c14dates.aom
     marine=rep(FALSE,nrow(c14dates.aomori)),DeltaR=rep(NA,nrow(c14dates.aomori)),DeltaRsd=rep(NA,nrow(c14dates.aomori)),
     yearRange=c(7000,3000),calCurves=c14dates.aomori$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
-##save.image("./part2.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
+save.image("./part2.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
 
 ### Hokkaido ###
 set.seed(12345)
@@ -109,7 +109,7 @@ exp.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,sd=c14dat
     marine=rep(FALSE,nrow(c14dates.hokkaido)),DeltaR=rep(NA,nrow(c14dates.hokkaido)),DeltaRsd=rep(NA,nrow(c14dates.hokkaido)),
     yearRange=c(7000,3000),calCurves=c14dates.hokkaido$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
-##save.image("./part3.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
+save.image("./part3.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
 
 ##load("./part1.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
 ##load("./part2.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
