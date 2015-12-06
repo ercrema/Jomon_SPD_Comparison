@@ -1,6 +1,6 @@
 "C14ID","SiteID","C14Age","C14Error","LabCode","deltaC13","deltaC13Error","Material","calCurve","Region"
-2,1,3550,40,"Beta-140236",-27.1,NA,"Charcoal","intcal13",2
-3,1,3650,40,"Beta-140237",-26.1,NA,"Charcoal","intcal13",2
+2,1,3510,40,"Beta-140236",-27.1,NA,"Charcoal","intcal13",2
+3,1,3630,40,"Beta-140237",-26.1,NA,"Charcoal","intcal13",2
 6,22,4425,45,"MTC-08487",-28.4,0.9,"Pottery Food Residue","intcal13",2
 8,22,4600,45,"MTC-08489",-29.8,0.8,"Pottery Food Residue","intcal13",2
 9,22,4650,45,"MTC-08490",-27.7,1.2,"Pottery Food Residue","intcal13",2
@@ -169,14 +169,12 @@
 385,5,4560,50,"Beta-112346",-26.5,NA,"Wood","intcal13",2
 386,5,4430,50,"Beta-112347",-28.9,NA,"Wood","intcal13",2
 389,6,4460,40,"Beta-194378",-26.3,NA,"Charred Remain","intcal13",2
-390,6,4500,40,"Beta-194380",-26.8,NA,"Charred Remain","intcal13",2
 393,31,4570,40,"IAAA-60532",-26.4,NA,"Charred Remain","intcal13",2
 398,5,4470,50,"Beta-112337",-27.1,NA,"Wood","intcal13",2
 399,5,4410,60,"Beta-112338",-26.9,NA,"Wood","intcal13",2
 403,5,4330,50,"Beta-112342",-29,NA,"Wood","intcal13",2
 404,5,4490,70,"Beta-111794",-28.4,NA,"Wood","intcal13",2
 407,5,4630,60,"Beta-116080",-27.4,NA,"Wood","intcal13",2
-408,6,4440,40,"Beta-194377",-26.7,NA,"Charred Remain","intcal13",2
 409,6,4510,40,"Beta-194379",-26.5,NA,"Charred Remain","intcal13",2
 410,46,4420,40,"Beta-162482",-26.7,NA,"Charred Remain","intcal13",2
 412,5,4100,50,"Beta-112345",-28.7,NA,"Wood","intcal13",2
@@ -185,8 +183,6 @@
 416,6,4450,40,"IAAA-60561",-31.1,NA,"Wood","intcal13",2
 417,15,3990,40,"Beta-194374",-26.3,NA,"Charred Remain","intcal13",2
 419,35,3600,40,"Beta-167980",-26.2,NA,"Charred Remain","intcal13",2
-421,1,3630,40,"Beta-140236",-26.1,NA,"Charred Remain","intcal13",2
-423,1,3630,40,"Beta-140236",-26.1,NA,"Charred Remain","intcal13",2
 428,23,3600,40,"Beta-199661",-26.2,NA,"Charred Remain","intcal13",2
 430,45,3720,40,"Beta-149642",-26.2,NA,"Charred Remain","intcal13",2
 432,40,3660,40,"Beta-156601",-27,NA,"Charred Remain","intcal13",2
