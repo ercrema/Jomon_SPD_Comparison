@@ -108,5 +108,10 @@ C14Dates$Material[which(C14Dates$Material=="Nutshell")]="Seed/Nut"
 #Remove samples without Labcode
 C14Dates=C14Dates[-which(is.na(C14Dates$LabCode)),]
 
+#Identifying Instances of Duplicated Labcodes
+anyDuplicated(C14Dates$LabCode)
+which(duplicated(C14Dates$LabCode))
+
+
 write.csv(C14Dates[,-11],"~/github/jomonSPD/c14dates.csv",row.names=FALSE)
 write.csv(Sites,"~/github/jomonSPD/sites.csv",row.names=FALSE)
