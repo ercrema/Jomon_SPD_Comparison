@@ -51,7 +51,12 @@ c14dates.kanto=subset(c14dates,Region==1)
 c14dates.aomori=subset(c14dates,Region==2)
 c14dates.hokkaido=subset(c14dates,Region==3)
 
+### Count Number of Sites ###
+length(unique(c14dates.kanto$SiteID)) # n=41 
+length(unique(c14dates.aomori$SiteID)) # n=47 
+length(unique(c14dates.hokkaido$SiteID)) # n=71
 
+     
 ### Create Bins ###
 binSize=200 ## Binsize set to 200yrs (cf Timpson et al 2015)
 bins.kanto<-binPrep(sites=c14dates.kanto$SiteID,dates=c14dates.kanto$C14Age,h=binSize)
@@ -63,7 +68,6 @@ length(unique(bins.kanto)) #Kanto nb=75
 length(unique(bins.aomori)) #Aomori nb=89
 length(unique(bins.hokkaido)) #Hokkaido nb=137
 
-##save.image("~/github/jomonSPD/intermediate1.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
 ################################################################
 ### SPD Analysis Part 1: Exponential and Uniform Null Models ###
 ################################################################
@@ -82,7 +86,6 @@ exp.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,sd=c14dates.kanto$
     marine=rep(FALSE,nrow(c14dates.kanto)),DeltaR=rep(NA,nrow(c14dates.kanto)),DeltaRsd=rep(NA,nrow(c14dates.kanto)),
     yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
-save.image("./part1.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
 
 ### Aomori ###
 
@@ -96,7 +99,6 @@ exp.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,sd=c14dates.aom
     marine=rep(FALSE,nrow(c14dates.aomori)),DeltaR=rep(NA,nrow(c14dates.aomori)),DeltaRsd=rep(NA,nrow(c14dates.aomori)),
     yearRange=c(7000,3000),calCurves=c14dates.aomori$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
-save.image("./part2.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
 
 ### Hokkaido ###
 set.seed(12345)
@@ -109,12 +111,6 @@ exp.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,sd=c14dat
     marine=rep(FALSE,nrow(c14dates.hokkaido)),DeltaR=rep(NA,nrow(c14dates.hokkaido)),DeltaRsd=rep(NA,nrow(c14dates.hokkaido)),
     yearRange=c(7000,3000),calCurves=c14dates.hokkaido$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
-save.image("./part3.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
-
-##load("./part1.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
-##load("./part2.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
-##load("./part3.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
-##save.image("./intermediate2.RData") # TO BE REMOVED *************************** <<<<<<<<<<<<<
 
 ##### Plot RESULTS #######
 
@@ -161,13 +157,9 @@ HokAomResShort<-permutationTest(regions=HokAom$Region,bins=binsFullHokAom,
                                 date=HokAom$C14Age,sd=HokAom$C14Error,
                                 marine=rep(FALSE,nrow(HokAom)),
                                 DeltaR=rep(NA,nrow(HokAom)),
-                                DeltaRsd=rep(NA,nrow(HokAom))
+                                DeltaRsd=rep(NA,nrow(HokAom)),
                                 yearRange=c(7000,4420),resolution=10,
                                 raw=FALSE,nsim=10000,calCurves=HokAom$calCurve)
-
-
-#### CONTINUE CHECK BELOW #####
-
 
 ##Aomori vs Kanto
 AomKanto<-subset(c14dates,Region==1|Region==2)
@@ -177,19 +169,19 @@ binsFullAomKanto<-binPrep(sites=AomKanto$SiteID,dates=AomKanto$C14Age,h=binSize)
 set.seed(12345)
 AomKantoResLong<-permutationTest(regions=AomKanto$Region,bins=binsFullAomKanto,
                                  date=AomKanto$C14Age,sd=AomKanto$C14Error,
-                                 marine=AomKanto$marine,
-                                 DeltaR=AomKanto$DeltaR,
-                                 DeltaRsd=AomKanto$DeltaRsd,
-                                 yearRange=temporalScopeAnalysisLong,resolution=10,
+                                 marine=rep(FALSE,nrow(AomKanto)),
+                                 DeltaR=rep(NA,nrow(AomKanto)),
+                                 DeltaRsd=rep(NA,nrow(AomKanto)),
+                                 yearRange=c(7000,3000),resolution=10,
                                  raw=FALSE,nsim=10000,calCurves=AomKanto$calCurve)
 
 set.seed(12345)
 AomKantoResShort<-permutationTest(regions=AomKanto$Region,bins=binsFullAomKanto,
                                  date=AomKanto$C14Age,sd=AomKanto$C14Error,
-                                 marine=AomKanto$marine,
-                                 DeltaR=AomKanto$DeltaR,
-                                 DeltaRsd=AomKanto$DeltaRsd,
-                                 yearRange=temporalScopeAnalysisShort,resolution=10,
+                                 marine=rep(FALSE,nrow(AomKanto)),
+                                 DeltaR=rep(NA,nrow(AomKanto)),
+                                 DeltaRsd=rep(NA,nrow(AomKanto)),
+                                 yearRange=c(7000,4420),resolution=10,
                                  raw=FALSE,nsim=10000,calCurves=AomKanto$calCurve)
 
 
@@ -204,19 +196,19 @@ binsFullHokkaidoKanto<-binPrep(sites=HokkaidoKanto$SiteID,dates=HokkaidoKanto$C1
 set.seed(12345)
 HokkaidoKantoResLong<-permutationTest(regions=HokkaidoKanto$Region,bins=binsFullHokkaidoKanto,
                                       date=HokkaidoKanto$C14Age,sd=HokkaidoKanto$C14Error,
-                                      marine=HokkaidoKanto$marine,
-                                      DeltaR=HokkaidoKanto$DeltaR,
-                                      DeltaRsd=HokkaidoKanto$DeltaRsd,
-                                      yearRange=temporalScopeAnalysisLong,resolution=10,
+                                      marine=rep(FALSE,nrow(HokkaidoKanto)),
+                                      DeltaR=rep(NA,nrow(HokkaidoKanto)),
+                                      DeltaRsd=rep(NA,nrow(HokkaidoKanto)),
+                                      yearRange=c(7000,3000),resolution=10,
                                       raw=FALSE,nsim=10000,calCurves=HokkaidoKanto$calCurve)
 
 set.seed(12345)
 HokkaidoKantoResShort<-permutationTest(regions=HokkaidoKanto$Region,bins=binsFullHokkaidoKanto,
                                       date=HokkaidoKanto$C14Age,sd=HokkaidoKanto$C14Error,
-                                      marine=HokkaidoKanto$marine,
-                                      DeltaR=HokkaidoKanto$DeltaR,
-                                      DeltaRsd=HokkaidoKanto$DeltaRsd,
-                                      yearRange=temporalScopeAnalysisShort,resolution=10,
+                                      marine=rep(FALSE,nrow(HokkaidoKanto)),
+                                      DeltaR=rep(NA,nrow(HokkaidoKanto)),
+                                      DeltaRsd=rep(NA,nrow(HokkaidoKanto)),
+                                      yearRange=c(7000,4420),resolution=10,
                                       raw=FALSE,nsim=10000,calCurves=HokkaidoKanto$calCurve)
 
 
@@ -250,8 +242,6 @@ resultPairwiseShort[3,1]=HokkaidoKantoResShort$pValueList[2]
 resultPairwiseShort[3,2]=HokAomResShort$pValueList[2]
 
 
-save.image("~/Dropbox/NiCoSS/PAPERS/method paper SPD/japan/intermediate3.RData")
-
 
 ## Plot Matrix Example ##
 
@@ -277,17 +267,17 @@ mtext(side=2,"Hokkaido",line=-2)
 par(mar=c(1.5,1,1,1))
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
-plotSPDSim(AomKantoResLong,option=c("significance2"),index=2,main="",yMax=0.014)
-plotSPDSim(HokkaidoKantoResLong,option=c("significance2"),index=1,main="",yMax=0.014)
+plotSPDSim(AomKantoResLong,index=2,main="",yMax=0.01)
+plotSPDSim(HokkaidoKantoResLong,index=1,main="",yMax=0.01)
 
 ##Aomori
-plotSPDSim(AomKantoResLong,option=c("significance2"),index=1,main="",yMax=0.012)
+plotSPDSim(AomKantoResLong,index=1,main="",yMax=0.01)
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
-plotSPDSim(HokAomResLong,option=c("significance2"),index=1,main="",yMax=0.012)
+plotSPDSim(HokAomResLong,index=1,main="",yMax=0.01)
 
 ##Hokkaido
-plotSPDSim(HokkaidoKantoResLong,option=c("significance2"),index=2,main="",yMax=0.008)
-plotSPDSim(HokAomResLong,option=c("significance2"),index=2,main="",yMax=0.008)
+plotSPDSim(HokkaidoKantoResLong,index=2,main="",yMax=0.01)
+plotSPDSim(HokAomResLong,index=2,main="",yMax=0.01)
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
