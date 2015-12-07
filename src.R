@@ -1,5 +1,12 @@
 
-####### Binning Function #######
+#######################
+## Utility Functions ##
+#######################
+
+### Binning Function for clustering 14C Dates 
+## sites ... site IDs
+## dates ... 14C dates
+## h ... clustering range (in 14C yrs)
 
 binPrep<-function(sites,dates,h=200)
     {
@@ -19,11 +26,20 @@ binPrep<-function(sites,dates,h=200)
         return(clusters)
     }
 
-####### Calibration Function ########
+### Calibration Function (adapted from BChron 
+## date ... 14C dates
+## sd ... 14C error
+## calCurves ... calibration curve (see Bchron documentation)
+## resolution ... output resolution (in years)
+## DeltaR ... DeltaR for marine curves
+## DeltaRsd ... DeltaRsd for marine curves
+## marine ... set to TRUE for marine dates
+## timeRange ... output time range
 
-calibrate<-function (date, sd, calCurves='intcal13',get.output = TRUE,resolution=1, DeltaR ,DeltaRsd, marine=FALSE,timeRange=NA) 
+
+calibrate<-function (date, sd, calCurves='intcal13',resolution=1, DeltaR ,DeltaRsd, marine=FALSE,timeRange=NA) 
 {
-    require(Bchron)
+    require(Bchron) # Bchron v4.0
     if (marine==TRUE)
         {
             date=date-DeltaR
@@ -32,8 +48,7 @@ calibrate<-function (date, sd, calCurves='intcal13',get.output = TRUE,resolution
                 {
                     stop("Calibration curve is not marine")
                 }
-        }
-    
+        }    
     pathToCalCurves=system.file("data", package = "Bchron")
     calCurveFile = paste(pathToCalCurves, "/", calCurves,".txt.gz", sep = "")
     calcurve=as.matrix(read.table(calCurveFile))
@@ -58,18 +73,22 @@ calibrate<-function (date, sd, calCurves='intcal13',get.output = TRUE,resolution
     return(res)
 }
 
-####### Uncalibration Function ########
+### Uncalibration Function
+## dates ... calendar dates
+## error ... obserbved error ranges
+## calCurves ... calibration curve (see Bchron documentation)
+## random ... if set to TRUE generate random 14C errors
 
 
 uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
 {
-    require(Bchron) # Bchron v4.0 - see http://mathsci.ucd.ie/~parnell_a/Rpack/Bchron.htm for updates
+    require(Bchron) # Bchron v4.0 
     pathToCalCurves=system.file("data", package = "Bchron")
     calCurveFile = paste(pathToCalCurves, "/", calCurves,".txt.gz", sep = "")
     calcurve=as.matrix(read.table(calCurveFile))[,1:3]
     colnames(calcurve) <- c("CAL.BP", "C14.Age", "Error")
 
-    # uncalibrate CAL BP dates, interpolating with approx
+    ## uncalibrate CAL BP dates, interpolating with approx
     dates <- data.frame(approx(calcurve, xout = dates))
     colnames(dates) <- c("CAL.BP", "C14.Age")
     calcurve.error <- approx(calcurve[,c(1,3)], xout = dates$CAL.BP)$y
@@ -79,14 +98,31 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
 }
 
 
-####### Null-hypothesis testing  ########
+#############################
+## Core Analysis Functions ##
+#############################
 
+
+### Local and Global ypothesis testing of SPDs vs fitted Uniform or Expenonential null Models
+## bins ... output of the binPrep() function
+## date ... 14C dates
+## sd ... 14C error
+## calCurves ... calibration curve (see Bchron documentation)
+## resolution ... output resolution (in years)
+## DeltaR ... DeltaR for marine curves
+## DeltaRsd ... DeltaRsd for marine curves
+## marine ... set to TRUE for marine dates
+## yearRange ... output time range
+## nsim ... number of simulations
+## edge ... edge effect correction
+## model ... option for type of null model
+## raw ... if set to TRUE outputs individual simulations
 
 nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,resolution,calCurves,nsim=100,raw=FALSE,edge=500,model=c("uniform","exponential"))    
 {
-    require(Bchron) # Bchron v4.0 - see http://mathsci.ucd.ie/~parnell_a/Rpack/Bchron.htm for updates
+    require(Bchron) # Bchron v4.0 
 
-    ##Execute Calibration for Each Date
+    ##Calibrate for each Date
     tmp=calibrate(date=0,sd=0,resolution=resolution,timeRange=yearRange) #retrieve size of the matrix
     individualDatesMatrix<-matrix(NA,nrow=nrow(tmp),ncol=length(date))
 
@@ -128,7 +164,7 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
         }
     close(pb)
 
-    ##Total Aggregation
+    ##Create observed SPD
     finalSPD<-apply(binnedMatrix,1,sum)
 
     ##Normalise to 1
@@ -138,13 +174,12 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
     fit <- lm(log(finalSPD)~tmp[,1])
     time=seq(min(tmp[,1])-edge,max(tmp[,1])+edge,resolution)
     
-    Densest <-  exp(fit$coefficients[1]) * exp(time*fit$coefficients[2]) #Null model density estimates
-    Weights <- Densest/sum(Densest)       
+    est <-  exp(fit$coefficients[1]) * exp(time*fit$coefficients[2]) #Null model density estimates
+    pweights <- est/sum(est)       
 
 
     ##Simulation starts here...
 
-    ##Assumption of No change in the interval#
     C14Interval=range(date)
     sim<-matrix(NA,nrow=length(finalSPD),ncol=nsim)
     print("Monte-Carlo test...")
@@ -158,7 +193,7 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
             if (model=="uniform")
                 {randomDates<-round(runif(length(unique(bins)),rev(yearRange)[1]-edge,rev(yearRange)[2]+edge))}
             if (model=="exponential")
-                {randomDates<-round(sample(time,size=length(unique(bins)),prob=Weights))}        
+                {randomDates<-round(sample(time,size=length(unique(bins)),prob=pweights))}        
             randomSDs<-sample(size=length(randomDates),sd,replace=TRUE)
             simDates<-round(uncalibrate(randomDates,randomSDs,random=TRUE)[,2:3])
             randomDates<-simDates[,1]
@@ -185,7 +220,7 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
     zLo=apply(Zsim,1,quantile,prob=0.025)
     zHi=apply(Zsim,1,quantile,prob=0.975)
 
-    ## z-score observed ##
+    ## z-score observed data ##
     Zscore_empirical <- (finalSPD - apply(sim, 1, mean))/apply(sim, 1, sd)
     busts=which(Zscore_empirical< zLo)
     booms=which(Zscore_empirical> zHi)
@@ -194,7 +229,7 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
     booms2=which(finalSPD> hi)
 
 
-    ## global p-value ##
+    ## compute global p-value ##
     observedStatistic=sum(c(zLo[busts] - Zscore_empirical[busts]),c(Zscore_empirical[booms]-zHi[booms]))
 
     expectedstatistic=abs(apply(Zsim,2,function(x,y){a=x-y;i=which(a<0);return(sum(a[i]))},y=zLo))+
@@ -216,11 +251,26 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
 }
 
 
-##### Permutation Test #######
+### Permutation Test for comparing multuple SPDs
+## regions ... value indicating membership to different sets 
+## bins ... output of the binPrep() function
+## date ... 14C dates
+## sd ... 14C error
+## calCurves ... calibration curve (see Bchron documentation)
+## resolution ... output resolution (in years)
+## DeltaR ... DeltaR for marine curves
+## DeltaRsd ... DeltaRsd for marine curves
+## marine ... set to TRUE for marine dates
+## yearRange ... output time range
+## nsim ... number of simulations
+## raw ... if set to TRUE outputs individual simulations
+
 
 permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,resolution=5,nsim=1000,raw=TRUE,calCurves)
     {
-#Execute Calibration for Each Date
+        require(Bchron) # Bchron v4.0
+        
+        ##Execute Calibration for Each Date
         tmp=calibrate(date=0,sd=0,resolution=resolution,timeRange=yearRange) #retrieve size of the matrix
         individualDatesMatrix<-matrix(NA,nrow=nrow(tmp),ncol=length(date))
 
@@ -236,7 +286,7 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
         close(pb)
 
 
-#Aggregate by Bins
+        ##Aggregate by Bins 
         binNames<-unique(bins)
         binnedMatrix<-matrix(NA,nrow=nrow(tmp),ncol=length(binNames))
         regionList<-numeric()
@@ -264,7 +314,7 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
             }
         close(pb)
 
-#Calculate observed SPD
+        ##Calculate observed SPD
 
         observedSPD<-vector("list",length=length(unique(regionList)))
         names(observedSPD)<-unique(regionList)
@@ -277,7 +327,8 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
                 tmpSPD=tmpSPD/sum(tmpSPD) #normalise to 1
                 observedSPD[[x]]=data.frame(calBP=tmp[,1],SPD=tmpSPD)
             }
-#Permutation Test
+        
+        ##Permutation Test
         simulatedSPD<-vector("list",length=length(unique(regionList)))
         for (x in 1:length(unique(regionList)))
             {
@@ -301,7 +352,7 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
             }
         close(pb)
 
-#Retrieve Summary Stats
+        ##Retrieve Summary Stats
 
         simulatedCIlist<-vector("list",length=length(unique(regionList)))
         
@@ -312,7 +363,7 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
             }
 
 
-#Compute Global p-value:
+        ##Compute Global p-value:
         pValueList=numeric(length=length(simulatedSPD))
         for (x in 1:length(simulatedSPD))
             {
@@ -356,11 +407,12 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
     }
 
 
-###### Plot Functions ##########
+####################
+## Plot Functions ##
+####################
 
-
-#### SPD vs NULL Model #####
-
+### SPD vs NULL Model 
+## data ... output of the nullTest() function
 
 plotSPDNull<-function(data, ...)
     {
@@ -469,8 +521,10 @@ plotSPDNull<-function(data, ...)
     }
 
 
-##### SPD Permutation test Plot ######
-
+### SPD Permutation test Plot 
+## data ... output of the permutationTest() function
+## index ... region index value for defining plot output
+## yMax ... maximum value for the y-axis
 plotSPDSim<-function(data,index,yMax=NA, ...)
     {
         require(zoo)
@@ -485,7 +539,7 @@ plotSPDSim<-function(data,index,yMax=NA, ...)
         busts=which(obs[,2]<envelope[,1])
         baseline=rep(0,nrow(obs))
         plot(obs[,1],obs[,2],xlim=c(max(obs[,1]),min(obs[,1])),ylim=c(0,yMax),
-             xlab="cal BP",ylab="SPD",type="l",col=1,lwd=1,axes=FALSE,...)
+             xlab="cal BP",ylab="SPD",type="l",col=1,lwd=0.5,axes=FALSE,...)
         axis(side=1,padj=-1)
         axis(side=2,padj=1)
         box()
