@@ -1,15 +1,15 @@
 ####################################
 ### Load Functions and Libraries ###
 ####################################
+## R version: 3.1.2
+library(Bchron) #for calibration of 14C dates // version 4.1.1
+library(rworldmap) #map making  //version 1.3-1
+library(maptools) #map making  //version 0.8-36 
+library(maps) #map making //version 2.3-9 
+library(GISTools) #map making //version 0.7-4
+library(zoo) #for plotting SPD outputs //version 1.7-12
 
-library(Bchron) #for calibration of 14C dates
-library(rworldmap) #map making 
-library(maptools) #map making 
-library(maps) #map making 
-library(GISTools) #map making 
-library(zoo) #for plotting SPD outputs
-
-source("./src.R")
+source("./src.R") #source functions 
 
 ##################
 ### Input Data ###
@@ -21,7 +21,7 @@ c14dates=read.csv("./c14dates.csv")
 ### Plot Site Distribution (Figure 1) ###
 #########################################
 
-detach("package:GISTools", unload=TRUE) #Unload GISTools momentarily#
+detach("package:GISTools", unload=TRUE) #Unload GISTools temporarily#
 basemap <- getMap(resolution = "high")
 layout(matrix(c(1,2,2,2,2,2,2,2,2),3,3),height=c(1,0.8,0.8))
 par(mar=c(0,0,0,0))
