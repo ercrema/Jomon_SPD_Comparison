@@ -9,8 +9,11 @@ Source Codes, Scripts, and Data for the paper "Summed Probability Distribution o
 
 ## Licences
 Text: CC-BY (http://creativecommons.org/licenses/by/4.0/)
+
 Code: MIT (http://opensource.org/licenses/MIT year: 2014, copyright holder: Enrico R. Crema)
+
 Data: CC0 (http://creativecommons.org/publicdomain/zero/1.0/) attribution requested in reuse
+
 
 ## Dependencies
 R version 3.1.2 (2014-10-31)
