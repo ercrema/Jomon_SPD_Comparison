@@ -1,9 +1,9 @@
 
-#######################
-## Utility Functions ##
-#######################
+#################################################
+## Binning Functions  for clustering 14C Dates ##
+#################################################
 
-### Binning Function for clustering 14C Dates 
+### PARAMETERS:
 ## sites ... site IDs
 ## dates ... 14C dates
 ## h ... clustering range (in 14C yrs)
@@ -26,7 +26,11 @@ binPrep<-function(sites,dates,h=200)
         return(clusters)
     }
 
-### Calibration Function (adapted from BChron 
+################################################
+## Calibration Function (adapted from BChron) ##
+################################################
+
+### PARAMETERS:
 ## date ... 14C dates
 ## sd ... 14C error
 ## calCurves ... calibration curve (see Bchron documentation)
@@ -73,7 +77,11 @@ calibrate<-function (date, sd, calCurves='intcal13',resolution=1, DeltaR ,DeltaR
     return(res)
 }
 
-### Uncalibration Function
+##############################
+## "Uncalibration" Function ##
+##############################
+
+### PARAMETERS:
 ## dates ... calendar dates
 ## error ... obserbved error ranges
 ## calCurves ... calibration curve (see Bchron documentation)
@@ -98,12 +106,12 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
 }
 
 
-#############################
-## Core Analysis Functions ##
-#############################
+#####################################################################################################
+## Local and Global MC-Hypothesis testing of SPDs with fitted Uniform or Expenonential null Models ##
+#####################################################################################################
 
 
-### Local and Global ypothesis testing of SPDs vs fitted Uniform or Expenonential null Models
+### PARAMETERS:
 ## bins ... output of the binPrep() function
 ## date ... 14C dates
 ## sd ... 14C error
@@ -250,8 +258,12 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
         }
 }
 
+##################################################
+## Permutation Test for comparing multuple SPDs ##
+##################################################
 
-### Permutation Test for comparing multuple SPDs
+
+### PARAMETERS:
 ## regions ... value indicating membership to different sets 
 ## bins ... output of the binPrep() function
 ## date ... 14C dates
@@ -407,11 +419,11 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
     }
 
 
-####################
-## Plot Functions ##
-####################
+########################################
+## Plot Functions: SPDs vs NULL Model ##
+########################################
 
-### SPD vs NULL Model 
+### PARAMETERS:
 ## data ... output of the nullTest() function
 
 plotSPDNull<-function(data, ...)
@@ -520,8 +532,11 @@ plotSPDNull<-function(data, ...)
        
     }
 
+###################################################
+## Plot Functions: SPD Permutation test results  ##
+########################################
 
-### SPD Permutation test Plot 
+### PARAMETERS:
 ## data ... output of the permutationTest() function
 ## index ... region index value for defining plot output
 ## yMax ... maximum value for the y-axis
@@ -629,10 +644,5 @@ plotSPDSim<-function(data,index,yMax=NA, ...)
         polygon(x=c(obs[,1],rev(obs[,1])),y=c(envelope[,1],rev(envelope[,2])),col=rgb(0,0,0,0.2),border=NA)
         spdSmooth<-rollmean(obs[,2],k=200/resolution,fill=NA)
         lines(obs[,1],spdSmooth,col=1,lwd=3,lty=2)
-        axis(side=1,at=seq(max(obs[,1]),min(obs[,1]),-100),labels=NA,tck = -.01)
-        
-        
-
-        
-        
+        axis(side=1,at=seq(max(obs[,1]),min(obs[,1]),-100),labels=NA,tck = -.01)  
     }
