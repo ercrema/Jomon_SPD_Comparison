@@ -4,6 +4,7 @@ Source Codes, Scripts, and Data for the paper "Summed Probability Distribution o
 ## Paper Reference 
 
 ## Author of the Repository:
+Enrico R. Crema (enrico.crema@gmail.com)
 
 ## Contents
 
