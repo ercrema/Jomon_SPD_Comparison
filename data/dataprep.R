@@ -113,5 +113,5 @@ anyDuplicated(C14Dates$LabCode)
 which(duplicated(C14Dates$LabCode))
 
 
-write.csv(C14Dates[,-11],"~/github/jomonSPD/c14dates.csv",row.names=FALSE)
-write.csv(Sites,"~/github/jomonSPD/sites.csv",row.names=FALSE)
+write.csv(C14Dates[,-11],"~/github/jomonSPD/data/c14dates.csv",row.names=FALSE)
+write.csv(Sites,"~/github/jomonSPD/data/sites.csv",row.names=FALSE)
