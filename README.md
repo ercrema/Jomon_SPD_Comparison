@@ -1,5 +1,5 @@
 # jomonSPD
-Source Codes, Scripts, and Data for the paper "Summed Probability Distribution of 14C Dates suggest divergence in the population dynamics of Central and Northern Japan during the Jomon Period"
+Source Codes, Scripts, and Data for the paper "Summed Probability Distribution of 14C Dates suggest divergence in the population dynamics of Central and Northern Japan during the Jomon Period" by Crema, E.R., Habu, J., Kobayashi, K., and Madella, M.
 
 ## Paper Reference 
 
@@ -7,6 +7,10 @@ Source Codes, Scripts, and Data for the paper "Summed Probability Distribution o
 Enrico R. Crema (enrico.crema@gmail.com)
 
 ## Contents
+* Core and utility R functions for analysis of 14C Summed Probability Distribution, including hypothesis testing against fitted null models (Exponential and Uniform distribution) and a permutation test for comparing two or more observed datasets. 
+* Script for generating figure 1~3 on the paper "Summed Probability Distribution of 14C Dates suggest divergence in the population dynamics of Central and Northern Japan during the Jomon Period"
+* 14C Dates from Hokkaido, Aomori, Gunma, Ibaraki, Tochigi, Tokyo, Saitama, Kanagawa, and Chiba prefectures in Japan
+* Site location (approximate to ~1km) of the 14C samples
 
 ## Licences
 Text: CC-BY (http://creativecommons.org/licenses/by/4.0/)
@@ -31,6 +35,7 @@ attached base packages:
 
 other attached packages:
 * zoo_1.7-12
+* mapdata_2.2-5
 * GISTools_0.7-4
 * rgeos_0.3-11
 * MASS_7.3-35       
@@ -52,6 +57,5 @@ loaded via a namespace (and not attached):
 * lattice_0.20-29
 * mclust_4.4
 * spam_1.0-1
-* tools_3.1.2  
 
 
