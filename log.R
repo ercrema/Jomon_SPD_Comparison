@@ -7,6 +7,7 @@ library(rworldmap) #map making  //version 1.3-1
 library(maptools) #map making  //version 0.8-36 
 library(maps) #map making //version 2.3-9 
 library(GISTools) #map making //version 0.7-4
+library(mapdata) #map making //version 2.2-5
 library(zoo) #for plotting SPD outputs //version 1.7-12
 
 source("./src.R") #source functions 
@@ -14,9 +15,8 @@ source("./src.R") #source functions
 ##################
 ### Input Data ###
 ##################
-sites=read.csv("./sites.csv")
-c14dates=read.csv("./c14dates.csv")
-
+sites=read.csv("./data/sites.csv")
+c14dates=read.csv("./data/c14dates.csv")
 #########################################
 ### Plot Site Distribution (Figure 1) ###
 #########################################
@@ -34,11 +34,41 @@ library(GISTools)
 north.arrow(xb=144.2259, yb=36.3012, len=0.25, lab="N",cex=2,col=1)
 coordinates(sites)<-c("Longitude","Latitude")
 latlong = "+init=epsg:4326"
-points(subset(sites,Prefecture=="Aomori"),pch=20,col=2)
-points(subset(sites,Prefecture=="Hokkaido"),pch=20,col=1)
-points(subset(sites,Prefecture!="Hokkaido"&Prefecture!="Aomori"),pch=20,col=4)
-legend(x=134,y=40.91,legend=c("Aomori","Hokkaido","Kanto"),col=c(2,1,4),pch=20,cex=1.7)
-## dev.print(device=pdf,"./figure1.pdf") 
+map("japan","hokkaido",add=TRUE,col="white",lwd=1.5)
+map("japan","aomori",add=TRUE,col="white",lwd=1.5)
+map("japan","ibaraki",add=TRUE,col="white",lwd=1.5)
+map("japan","chiba",add=TRUE,col="white",lwd=1.5)
+map("japan","gunma",add=TRUE,col="white",lwd=1.5)
+map("japan","tokyo",add=TRUE,col="white",lwd=1.5)
+map("japan","saitama",add=TRUE,col="white",lwd=1.5)
+map("japan","tokyo",add=TRUE,col="white",lwd=1.5)
+map("japan","kanagawa",add=TRUE,col="white",lwd=1.5)
+map("japan","tochigi",add=TRUE,col="white",lwd=1.5)
+points(sites,pch=20,col=1)
+text(x=138.9726,y=41.00709,"Aomori",cex=2.3)
+text(x=140.0389,y=43.99951,"Hokkaido",cex=2.3)
+text(x=141.4724,y=37.09934,"Kanto",cex=2.3)
+lines(x=c(140.8214,141.6318),y=c(40.83573,41.15288))
+lines(x=c(141.4925,142.0185),y=c(40.51684,40.64663))
+text(x=142.628,y=41.24277,"Aomori City",cex=1.5)
+text(x=143.0996,y=40.76567,"Hachinohe City",cex=1.5)
+
+lines(x=c(140.4610,141.2926),y=c(36.28884,36.48591))
+lines(x=c(139.7954,139.7954),y=c(36.76946,37.30036))
+lines(x=c(139.0946,138.6011),y=c(36.73894,37.11231))
+lines(x=c(138.9356,138.1129),y=c(35.97255,35.90670))
+lines(x=c(140.3284,140.5558),y=c(35.42324,35.24928))
+lines(x=c(139.0884,138.4872),y=c(35.80983,35.66287))
+lines(x=c(139.0884,138.4872),y=c(35.80983,35.66287))
+lines(x=c(139.0906,138.5351),y=c(35.27300,35.21326))
+text(x=138.3618,y=37.30975,"Gunma",cex=1.5)
+text(x=140.8808,y=35.09725,"Chiba",cex=1.5)
+text(x=139.8198,y=37.47976,"Tochigi",cex=1.5)
+text(x=141.5101,y=36.57375,"Ibaraki",cex=1.5)
+text(x=137.4042,y=35.94444,"Saitama",cex=1.5)
+text(x=138.0187,y=35.56576,"Tokyo",cex=1.5)
+text(x=137.6419,y=35.16032,"Kanagawa",cex=1.5)
+dev.print(device=pdf,"./figures/figure1.pdf") 
 
 
 #############################
