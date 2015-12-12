@@ -17,7 +17,7 @@ C14Samples = dbGetQuery( con,'SELECT * FROM C14Samples' )
 Sites = dbGetQuery( con,'SELECT * FROM Sites' )
 
 ### General Parameters ###
-deltaC13Cutoff=-26 
+deltaC13Cutoff=-24 
 temporalScopeData = c(7500,2500)  #in C14Age
 temporalScopeAnalysisLong = c(7000,3000) #in calYr 
 temporalScopeAnalysisShort = c(7000,4420) #in calYr (Early~Late Jomon period; Kobayashi's Scheme)
@@ -105,12 +105,24 @@ C14Dates$Material[which(C14Dates$Material=="Others")]="Others"
 C14Dates$Material[which(C14Dates$Material=="Nutshell")]="Seed/Nut"
 
 
-#Remove samples without Labcode
+##Remove samples without Labcode
 C14Dates=C14Dates[-which(is.na(C14Dates$LabCode)),]
+##C14Dates[which(duplicated(C14Dates$LabCode)),]
 
-#Identifying Instances of Duplicated Labcodes
+##Identifying Instances of Duplicated Labcodes
 anyDuplicated(C14Dates$LabCode)
 which(duplicated(C14Dates$LabCode))
+
+
+##Sites with no locations:
+site2remove=Sites[which(is.na(Sites$Latitude)),]$SiteID
+#   SiteID  SiteName Latitude Longitude Prefecture
+#20     29  Kenyoshi       NA        NA     Aomori
+#80    161 Shimonone       NA        NA   Kanagawa
+
+## Remove these Sites and C14Dates linked to them
+C14Dates=subset(C14Dates,!SiteID%in%site2remove)
+Sites=subset(Sites,!Sites%in%site2remove)
 
 
 write.csv(C14Dates[,-11],"~/github/jomonSPD/data/c14dates.csv",row.names=FALSE)
