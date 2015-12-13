@@ -3,10 +3,6 @@
 ####################################
 
 library(Bchron) #for calibration of 14C dates
-library(rworldmap) #map making 
-library(maptools) #map making 
-library(maps) #map making 
-library(GISTools) #map making 
 library(zoo) #for plotting SPD outputs
 
 source("./src.R")
@@ -16,7 +12,10 @@ source("./src.R")
 ##################
 sites=read.csv("./sites.csv")
 c14dates=read.csv("./c14dates.csv")
-save.image("./RDatas/intermediate1.RData") 
+save.image("./RDatas/intermediate1.RData")
+##save.image("./RDatas/SI_26/intermediate1.RData") for DeltaC < -26 Threshold 
+
+
 ################################################################
 ### SPD Analysis Part 1: Exponential and Uniform Null Models ###
 ################################################################
