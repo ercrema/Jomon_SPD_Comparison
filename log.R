@@ -17,6 +17,11 @@ source("./src.R") #source functions
 ##################
 sites=read.csv("./data/sites.csv")
 c14dates=read.csv("./data/c14dates.csv")
+
+## Subsetting using Delta13 C Threshold at -26
+## c14dates=subset(c14dates,deltaC13<c(-26))
+## sites=subset(sites,SiteID%in%unique(c14dates$SiteID))
+
 #########################################
 ### Plot Site Distribution (Figure 1) ###
 #########################################
@@ -74,18 +79,28 @@ dev.print(device=pdf,"./figures/figure1.pdf")
 #############################
 ### Retreive Sample Sizes ###
 #############################
-nrow(c14dates) #Total Sample Size (n=867)
-table(c14dates$Region) #Number of 14C Dates per Region (1=Kanto (n=276) ; 2=Aomori (n=259); 3=Hokkaido (n=332))
+nrow(c14dates)
+##Total Sample Size (n=1442) Full Sample
+##Total Sample Size (n=867) Reduced
+
+table(c14dates$Region)
+##Number of 14C Dates per Region (1=Kanto (n=276) ; 2=Aomori (n=259); 3=Hokkaido (n=332)) Reduced
+##Number of 14C Dates per Region (1=Kanto (n=406) ; 2=Aomori (n=432); 3=Hokkaido (n=604)) Full Sample
 
 c14dates.kanto=subset(c14dates,Region==1)
 c14dates.aomori=subset(c14dates,Region==2)
 c14dates.hokkaido=subset(c14dates,Region==3)
 
 ### Count Number of Sites ###
-length(unique(c14dates.kanto$SiteID)) # n=41 
-length(unique(c14dates.aomori$SiteID)) # n=47 
-length(unique(c14dates.hokkaido$SiteID)) # n=71
-
+length(unique(c14dates.kanto$SiteID))
+## n=41 Reduced
+## n=47 Full Sample
+length(unique(c14dates.aomori$SiteID))
+## n=47 Reduced
+## n=57 Full Sample
+length(unique(c14dates.hokkaido$SiteID))
+## n=71 Reduced
+## n=82 Full Sample
      
 ### Create Bins ###
 binSize=200 ## Binsize set to 200yrs (cf Timpson et al 2015)
@@ -94,9 +109,15 @@ bins.aomori<-binPrep(sites=c14dates.aomori$SiteID,dates=c14dates.aomori$C14Age,h
 bins.hokkaido<-binPrep(sites=c14dates.hokkaido$SiteID,dates=c14dates.hokkaido$C14Age,h=binSize)
 
 ### Retrieve Bin Counts ###
-length(unique(bins.kanto)) #Kanto nb=75
-length(unique(bins.aomori)) #Aomori nb=89
-length(unique(bins.hokkaido)) #Hokkaido nb=137
+length(unique(bins.kanto))
+##Kanto nb=75 Reduced
+##Kanto nb=87 Full Sample
+length(unique(bins.aomori))
+##Aomori nb=89 Reduced
+##Aomori nb=128 Full Sample
+length(unique(bins.hokkaido))
+##Hokkaido nb=137
+##Hokkaido nb=187
 
 ################################################################
 ### SPD Analysis Part 1: Exponential and Uniform Null Models ###
@@ -106,6 +127,7 @@ length(unique(bins.hokkaido)) #Hokkaido nb=137
 ## N.B : These functions require considerable computing time (> c.3.5 hours each, with an Intel(R) Xeon(R) CPU E3-1280 V2 @ 3.60GHz, 32Gb RAM)
 
 ### Kanto ###
+load("./intermediate1.RData")
 set.seed(12345)
 unif.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,sd=c14dates.kanto$C14Error,
     marine=rep(FALSE,nrow(c14dates.kanto)),DeltaR=rep(NA,nrow(c14dates.kanto)),DeltaRsd=rep(NA,nrow(c14dates.kanto)),
@@ -116,9 +138,11 @@ exp.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,sd=c14dates.kanto$
     marine=rep(FALSE,nrow(c14dates.kanto)),DeltaR=rep(NA,nrow(c14dates.kanto)),DeltaRsd=rep(NA,nrow(c14dates.kanto)),
     yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
+save.image("./part1.RData")
+
 
 ### Aomori ###
-
+load("./intermediate1.RData")
 set.seed(12345)
 unif.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,sd=c14dates.aomori$C14Error,
     marine=rep(FALSE,nrow(c14dates.aomori)),DeltaR=rep(NA,nrow(c14dates.aomori)),DeltaRsd=rep(NA,nrow(c14dates.aomori)),
@@ -129,8 +153,10 @@ exp.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,sd=c14dates.aom
     marine=rep(FALSE,nrow(c14dates.aomori)),DeltaR=rep(NA,nrow(c14dates.aomori)),DeltaRsd=rep(NA,nrow(c14dates.aomori)),
     yearRange=c(7000,3000),calCurves=c14dates.aomori$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
+save.image("./part2.RData")
 
 ### Hokkaido ###
+load("./intermediate1.RData")
 set.seed(12345)
 unif.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,sd=c14dates.hokkaido$C14Error,
     marine=rep(FALSE,nrow(c14dates.hokkaido)),DeltaR=rep(NA,nrow(c14dates.hokkaido)),DeltaRsd=rep(NA,nrow(c14dates.hokkaido)),
@@ -140,6 +166,8 @@ set.seed(12345)
 exp.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,sd=c14dates.hokkaido$C14Error,
     marine=rep(FALSE,nrow(c14dates.hokkaido)),DeltaR=rep(NA,nrow(c14dates.hokkaido)),DeltaRsd=rep(NA,nrow(c14dates.hokkaido)),
     yearRange=c(7000,3000),calCurves=c14dates.hokkaido$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
+save.image("./part3.RData")
+
 
 
 ##### Plot RESULTS #######
