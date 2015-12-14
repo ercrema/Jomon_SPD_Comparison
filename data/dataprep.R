@@ -122,7 +122,7 @@ site2remove=Sites[which(is.na(Sites$Latitude)),]$SiteID
 
 ## Remove these Sites and C14Dates linked to them
 C14Dates=subset(C14Dates,!SiteID%in%site2remove)
-Sites=subset(Sites,!Sites%in%site2remove)
+Sites=subset(Sites,!SiteID%in%site2remove)
 
 
 write.csv(C14Dates[,-11],"~/github/jomonSPD/data/c14dates.csv",row.names=FALSE)
