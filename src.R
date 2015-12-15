@@ -246,15 +246,15 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
     pvalue <- 1 - c(length(expectedstatistic[expectedstatistic <= observedStatistic]))/c(length(expectedstatistic)+1)
 
     result=data.frame(calBP=tmp[,1],SPD=finalSPD,lo=lo,hi=hi)
-    expModel=data.frame(calBP=time,spd=Weights)
+    expModel=data.frame(calBP=time,spd=pweights)
     
     if(raw==FALSE)
         {
-            return(list(result=result,expModel,pval=pvalue))
+            return(list(result=result,expModel=expModel,pval=pvalue))
         }
     if(raw==TRUE)
         {
-            return(list(result=result,sim=sim,expModel,pval=pvalue))
+            return(list(result=result,sim=sim,expModel=expModel,pval=pvalue))
         }
 }
 
