@@ -173,13 +173,13 @@ title(paste("Hokkaido: uniform null model (p-value=",round(unif.hokkaido$pval,4)
 
 plotSPDNull(exp.kanto)
 title(paste("Kanto: exponential null model (p-value<",round(exp.kanto$pval,4),")",sep=""))
-legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(1,2,5,5,5),cex=0.8)
+legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(1,2,5,5,5),cex=1)
 plotSPDNull(exp.aomori)
 title(paste("Aomori: exponential null model (p-value<",round(exp.aomori$pval,4),")",sep=""))
 plotSPDNull(exp.hokkaido)
 title(paste("Hokkaido: exponential null model (p-value<",round(exp.hokkaido$pval,4),")",sep=""))
 
-dev.print(device=pdf,"./figure2.pdf") 
+dev.print(device=pdf,"~/github/jomonSPD/figures/figure2.pdf") 
 
 #############################################
 ### SPD Analysis Part 2: Permutation Test ###
@@ -328,3 +328,5 @@ plotSPDSim(HokkaidoKantoResLong,index=2,main="",yMax=0.01)
 plotSPDSim(HokAomResLong,index=2,main="",yMax=0.01)
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
+
+dev.print(device=pdf,"~/github/jomonSPD/figures/figure3.pdf") 
