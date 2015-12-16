@@ -246,15 +246,14 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
     pvalue <- 1 - c(length(expectedstatistic[expectedstatistic <= observedStatistic]))/c(length(expectedstatistic)+1)
 
     result=data.frame(calBP=tmp[,1],SPD=finalSPD,lo=lo,hi=hi)
-    expModel=data.frame(calBP=time,spd=pweights)
     
     if(raw==FALSE)
         {
-            return(list(result=result,expModel=expModel,pval=pvalue))
+            return(list(result=result,pval=pvalue))
         }
     if(raw==TRUE)
         {
-            return(list(result=result,sim=sim,expModel=expModel,pval=pvalue))
+            return(list(result=result,sim=sim,pval=pvalue))
         }
 }
 
@@ -440,7 +439,7 @@ plotSPDNull<-function(data, ...)
         busts=which(obs[,2]<envelope[,1])
         baseline=rep(0,nrow(obs))
         plot(obs[,1],obs[,2],xlim=c(max(obs[,1]),min(obs[,1])),ylim=c(0,yMax),
-             xlab="cal BP",ylab="SPD",type="l",col=1,lwd=1,...)
+             xlab="cal BP",ylab="SPD",type="l",col=1,lwd=0.5,...)
 
         boomPlot=baseline
         boomPlot[booms]=obs[booms,2]
@@ -527,7 +526,7 @@ plotSPDNull<-function(data, ...)
         
         polygon(x=c(obs[,1],rev(obs[,1])),y=c(envelope[,1],rev(envelope[,2])),col=rgb(0,0,0,0.2),border=NA)
         spdSmooth<-rollmean(obs[,2],k=200/resolution,fill=NA)
-        lines(obs[,1],spdSmooth,col=1,lwd=3,lty=2)
+        lines(obs[,1],spdSmooth,col=1,lwd=2,lty=2)
         axis(side=1,at=seq(max(obs[,1]),min(obs[,1]),-100),labels=NA,tck = -.01)
        
     }
