@@ -127,7 +127,6 @@ length(unique(bins.hokkaido))
 ## N.B : These functions require considerable computing time (> c.3.5 hours each, with an Intel(R) Xeon(R) CPU E3-1280 V2 @ 3.60GHz, 32Gb RAM)
 
 ### Kanto ###
-load("./intermediate1.RData")
 set.seed(12345)
 unif.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,sd=c14dates.kanto$C14Error,
     marine=rep(FALSE,nrow(c14dates.kanto)),DeltaR=rep(NA,nrow(c14dates.kanto)),DeltaRsd=rep(NA,nrow(c14dates.kanto)),
@@ -138,11 +137,7 @@ exp.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,sd=c14dates.kanto$
     marine=rep(FALSE,nrow(c14dates.kanto)),DeltaR=rep(NA,nrow(c14dates.kanto)),DeltaRsd=rep(NA,nrow(c14dates.kanto)),
     yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
-save.image("./part1.RData")
-
-
 ### Aomori ###
-load("./intermediate1.RData")
 set.seed(12345)
 unif.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,sd=c14dates.aomori$C14Error,
     marine=rep(FALSE,nrow(c14dates.aomori)),DeltaR=rep(NA,nrow(c14dates.aomori)),DeltaRsd=rep(NA,nrow(c14dates.aomori)),
@@ -153,10 +148,7 @@ exp.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,sd=c14dates.aom
     marine=rep(FALSE,nrow(c14dates.aomori)),DeltaR=rep(NA,nrow(c14dates.aomori)),DeltaRsd=rep(NA,nrow(c14dates.aomori)),
     yearRange=c(7000,3000),calCurves=c14dates.aomori$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
 
-save.image("./part2.RData")
-
 ### Hokkaido ###
-load("./intermediate1.RData")
 set.seed(12345)
 unif.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,sd=c14dates.hokkaido$C14Error,
     marine=rep(FALSE,nrow(c14dates.hokkaido)),DeltaR=rep(NA,nrow(c14dates.hokkaido)),DeltaRsd=rep(NA,nrow(c14dates.hokkaido)),
@@ -166,13 +158,10 @@ set.seed(12345)
 exp.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,sd=c14dates.hokkaido$C14Error,
     marine=rep(FALSE,nrow(c14dates.hokkaido)),DeltaR=rep(NA,nrow(c14dates.hokkaido)),DeltaRsd=rep(NA,nrow(c14dates.hokkaido)),
     yearRange=c(7000,3000),calCurves=c14dates.hokkaido$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
-save.image("./part3.RData")
-
 
 
 ##### Plot RESULTS #######
 
-load("~/github/jomonSPD/intermediate2.RData")
 options(scipen=999) #Ensure p-values are displayed in non-scientific annotation 
 par(mfrow=c(2,3))
 plotSPDNull(unif.kanto)
