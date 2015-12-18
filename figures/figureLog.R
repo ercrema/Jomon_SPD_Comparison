@@ -1,10 +1,12 @@
 ## Load DATA ##
 load("./RDatas/final.RData")
 
-
 #######################################
 ## Figure 1: Map of Sample Locations ##
 #######################################
+
+postscript("./figures/figure1.eps", height = 6, width = 6,family = "Times", paper = "special", onefile = FALSE, horizontal = FALSE)
+
 library(rworldmap) #map making  //version 1.3-1
 library(maptools) #map making  //version 0.8-36 
 library(maps) #map making //version 2.3-9 
@@ -17,7 +19,8 @@ layout(matrix(c(1,2,2,2,2,2,2,2,2),3,3),height=c(1,0.8,0.8))
 par(mar=c(0,0,0,0))
 plot(basemap, col = "lightgrey", border = NA,xlim = c(114,149),ylim = c(24,50))
 rect(xleft=135.2895, ybottom=35.16062, xright= 147, ytop=45)
-box()   
+box()
+##par(new=T,bg="white")
 plot(basemap, col = "lightgrey", border = NA,xlim = c(min(sites$Longitude), 142),ylim = c(min(sites$Latitude),45))
 map.scale(x=142.0569, y=35.51394, ratio=FALSE, relwidth=0.25,cex=1.5)
 library(GISTools)
@@ -58,7 +61,7 @@ text(x=141.5101,y=36.57375,"Ibaraki",cex=1.5)
 text(x=137.4042,y=35.94444,"Saitama",cex=1.5)
 text(x=138.0187,y=35.56576,"Tokyo",cex=1.5)
 text(x=137.6419,y=35.16032,"Kanagawa",cex=1.5)
-dev.print(device=pdf,"./figures/figure1.pdf") 
+dev.off()
 
 
 #####################################################
@@ -66,25 +69,24 @@ dev.print(device=pdf,"./figures/figure1.pdf")
 #####################################################
 library(Bchron) #for calibration of 14C dates // version 4.1.1
 library(zoo) #for plotting SPD outputs //version 1.7-12
-
 options(scipen=999) #Ensure p-values are displayed in non-scientific annotation 
-par(mfrow=c(2,3))
+par(mfrow=c(2,3),family="Times")
+par(mar=c(4.5, 4, 1.5, 1))
 plotSPDNull(unif.kanto)
-title(paste("Kanto: uniform null model (p-value=",round(unif.kanto$pval,4),")",sep=""))
+title("Kanto: uniform null model")
 plotSPDNull(unif.aomori)
-title(paste("Aomori: uniform null model (p-value=",round(unif.aomori$pval,4),")",sep=""))
+title("Aomori: uniform null model")
 plotSPDNull(unif.hokkaido)
-title(paste("Hokkaido: uniform null model (p-value=",round(unif.hokkaido$pval,4),")",sep=""))
+title("Hokkaido: uniform null model")
 
 plotSPDNull(exp.kanto)
-title(paste("Kanto: exponential null model (p-value<",round(exp.kanto$pval,4),")",sep=""))
-legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(1,2,5,5,5),cex=0.8)
+title("Kanto: exponential null model")
 plotSPDNull(exp.aomori)
-title(paste("Aomori: exponential null model (p-value<",round(exp.aomori$pval,4),")",sep=""))
+title("Aomori: exponential null model")
 plotSPDNull(exp.hokkaido)
-title(paste("Hokkaido: exponential null model (p-value<",round(exp.hokkaido$pval,4),")",sep=""))
-
-dev.print(device=pdf,"./figures/figure2.pdf") 
+title("Hokkaido: exponential null model")
+legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(0.5,2,5,5,5),cex=0.75,bg="white")
+dev.print(device=pdf,useDingbats=FALSE,"./figures/figure2.pdf")
 
 #####################################
 ## Figure 3: SPD Permutation Tests ##
@@ -93,9 +95,10 @@ library(Bchron) #for calibration of 14C dates // version 4.1.1
 library(zoo) #for plotting SPD outputs //version 1.7-12
 
 
+
 layout(matrix(c(1:4,5,8:10,6,11:13,7,14:16),byrow=TRUE,4,4),width=c(0.15,1,1,1),height=c(0.15,1,1,1))
 ##layout.show(n = 16)
-par(mar=c(0,0,0,0))
+par(mar=c(0,0,0,0),family="Times")
 plot(runif(1),axes=F,xlab="",ylab="",type="n")
 plot(runif(1),axes=F,xlab="",ylab="",type="n")
 mtext(side=1,"Kanto",line=-2)
@@ -127,6 +130,7 @@ plotSPDSim(HokAomResLong,index=1,main="",yMax=0.01)
 ##Hokkaido
 plotSPDSim(HokkaidoKantoResLong,index=2,main="",yMax=0.01)
 plotSPDSim(HokAomResLong,index=2,main="",yMax=0.01)
+legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(0.5,2,5,5,5),cex=0.8,bg="white")
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
-dev.print(device=pdf,"./figures/figure3.pdf") 
+dev.print(device=pdf,useDingbats=FALSE,"./figures/figure3.pdf")
