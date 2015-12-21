@@ -94,13 +94,13 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
     pathToCalCurves=system.file("data", package = "Bchron")
     calCurveFile = paste(pathToCalCurves, "/", calCurves,".txt.gz", sep = "")
     calcurve=as.matrix(read.table(calCurveFile))[,1:3]
-    colnames(calcurve) <- c("CAL.BP", "C14.Age", "Error")
+    colnames(calcurve) <- c("CALBP", "C14BP", "Error")
 
     ## uncalibrate CAL BP dates, interpolating with approx
     dates <- data.frame(approx(calcurve, xout = dates))
-    colnames(dates) <- c("CAL.BP", "C14.Age")
+    colnames(dates) <- c("CALBP", "C14BP")
     calcurve.error <- approx(calcurve[,c(1,3)], xout = dates$CAL.BP)$y
-    dates$Error <- sqrt(error**2 + calcurve.error**2)
+    dates$Error <- sqrt(error^2 + calcurve.error^2)
     if(random==TRUE){dates$C14.Age=round(rnorm(nrow(dates),mean=dates$C14.Age,sd=dates$Error))}
     return(dates)
 }
