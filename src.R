@@ -26,56 +26,36 @@ binPrep<-function(sites,dates,h=200)
         return(clusters)
     }
 
-################################################
-## Calibration Function (adapted from BChron) ##
-################################################
+
+#############################################################################
+## Calibration Function (wrapper for BChron's  BchronCalibrate() function) ##
+#############################################################################
 
 ### PARAMETERS:
 ## date ... 14C dates
-## sd ... 14C error
+## error ... 14C error
 ## calCurves ... calibration curve (see Bchron documentation)
-## resolution ... output resolution (in years)
 ## DeltaR ... DeltaR for marine curves
 ## DeltaRsd ... DeltaRsd for marine curves
-## marine ... set to TRUE for marine dates
 ## timeRange ... output time range
 
-
-calibrate<-function (date, sd, calCurves='intcal13',resolution=1, DeltaR ,DeltaRsd, marine=FALSE,timeRange=NA) 
+calibrate<-function(date, error, calCurves='intcal13', DeltaR=0 ,DeltaRsd=0,timeRange=c(10000,0)) 
 {
-    require(Bchron) # Bchron v4.0
-    if (marine==TRUE)
-        {
-            date=date-DeltaR
-            sd=sd+DeltaRsd
-            if (calCurves!='marine13')
-                {
-                    stop("Calibration curve is not marine")
-                }
-        }    
-    pathToCalCurves=system.file("data", package = "Bchron")
-    calCurveFile = paste(pathToCalCurves, "/", calCurves,".txt.gz", sep = "")
-    calcurve=as.matrix(read.table(calCurveFile))
-    calbp = calcurve[, 1]
-    c14bp = calcurve[, 2]
-    calsd = calcurve[, 3]
-    if (date > max(calbp) | date < min(calbp)) 
-        stop("Radiocarbon date outside of calibration curve range")
-    agegrid = seq(min(calbp), max(calbp), by = resolution)
-    mu = approx(calbp, c14bp, xout = agegrid)$y
-    tau = sd^2 + approx(calbp, calsd, xout = agegrid)$y
-    dens = dnorm(date, mean = mu, sd = sqrt(tau))
-    dens = dens/sum(dens)
-    CalBPdates = agegrid
-    Prob = dens
-    res=cbind(CalBPdates,Prob)
-    if (any(!is.na(timeRange)))
-        {
-            index=which(res[,1]<=timeRange[1]&res[,1]>=timeRange[2])
-            res=res[index,]
-        }
+    require(Bchron)
+    date=date-DeltaR
+    error=error+DeltaRsd
+    tmp = BchronCalibrate(ages=date,ageSds=error,calCurves=calCurves)
+    calBP=rev(as.numeric(tmp[[1]][4][[1]]))
+    prob=rev(as.numeric(tmp[[1]][[5]]))
+    calBP.out=seq(50000,0,-1)
+    prob.out=rep(0,length=length(calBP.out))
+    index=which(calBP.out%in%calBP)
+    prob.out[index]=prob
+    res=cbind(calBP.out,prob.out)
+    res=res[which(calBP.out<timeRange[1]&calBP.out>timeRange[2]),]
     return(res)
 }
+
 
 ##############################
 ## "Uncalibration" Function ##
@@ -99,9 +79,9 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
     ## uncalibrate CAL BP dates, interpolating with approx
     dates <- data.frame(approx(calcurve, xout = dates))
     colnames(dates) <- c("CALBP", "C14BP")
-    calcurve.error <- approx(calcurve[,c(1,3)], xout = dates$CAL.BP)$y
+    calcurve.error <- approx(calcurve[,c(1,3)], xout = dates$CALBP)$y
     dates$Error <- sqrt(error^2 + calcurve.error^2)
-    if(random==TRUE){dates$C14.Age=round(rnorm(nrow(dates),mean=dates$C14.Age,sd=dates$Error))}
+    if(random==TRUE){dates$C14.Age=round(rnorm(nrow(dates),mean=dates$C14BP,sd=dates$Error))}
     return(dates)
 }
 
@@ -114,9 +94,8 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
 ### PARAMETERS:
 ## bins ... output of the binPrep() function
 ## date ... 14C dates
-## sd ... 14C error
+## error ... 14C error
 ## calCurves ... calibration curve (see Bchron documentation)
-## resolution ... output resolution (in years)
 ## DeltaR ... DeltaR for marine curves
 ## DeltaRsd ... DeltaRsd for marine curves
 ## marine ... set to TRUE for marine dates
@@ -126,12 +105,12 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
 ## model ... option for type of null model
 ## raw ... if set to TRUE outputs individual simulations
 
-nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,resolution,calCurves,nsim=100,raw=FALSE,edge=500,model=c("uniform","exponential"))    
+nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=100,raw=FALSE,edge=500,model=c("uniform","exponential"))    
 {
     require(Bchron) # Bchron v4.0 
 
     ##Calibrate for each Date
-    tmp=calibrate(date=0,sd=0,resolution=resolution,timeRange=yearRange) #retrieve size of the matrix
+    tmp=calibrate(date=0,error=0,timeRange=yearRange) #retrieve size of the matrix
     individualDatesMatrix<-matrix(NA,nrow=nrow(tmp),ncol=length(date))
 
     print("Calibrating Individual Dates...")
@@ -142,9 +121,9 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
     for (x in 1:length(date))
         {
             setTxtProgressBar(pb, x)
-            individualDatesMatrix[,x]=calibrate(date=date[x],sd=sd[x],marine=marine[x],
-                                     DeltaR=DeltaR[x],DeltaRsd=DeltaRsd[x],timeRange=yearRange,
-                                     resolution=resolution,calCurves[x])[,2]
+            individualDatesMatrix[,x]=calibrate(date=date[x],error=error[x],
+                                     DeltaR=DeltaR[x],DeltaRsd=DeltaRsd[x],
+                                     timeRange=yearRange,calCurves[x])[,2]
         }
 
 
@@ -180,7 +159,7 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
 
     ##Fit Exponential Model ## 
     fit <- lm(log(finalSPD)~tmp[,1])
-    time=seq(min(tmp[,1])-edge,max(tmp[,1])+edge,resolution)
+    time=seq(min(tmp[,1])-edge,max(tmp[,1])+edge,1)
     
     est <-  exp(fit$coefficients[1]) * exp(time*fit$coefficients[2]) #Null model density estimates
     pweights <- est/sum(est)       
@@ -202,7 +181,7 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
                 {randomDates<-round(runif(length(unique(bins)),rev(yearRange)[1]-edge,rev(yearRange)[2]+edge))}
             if (model=="exponential")
                 {randomDates<-round(sample(time,size=length(unique(bins)),prob=pweights))}        
-            randomSDs<-sample(size=length(randomDates),sd,replace=TRUE)
+            randomSDs<-sample(size=length(randomDates),error,replace=TRUE)
             simDates<-round(uncalibrate(randomDates,randomSDs,random=TRUE)[,2:3])
             randomDates<-simDates[,1]
             randomSDs<-simDates[,2]
@@ -210,9 +189,9 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
             simDateMatrix=matrix(NA,nrow=nrow(tmp),ncol=length(randomDates))
             for (x in 1:length(randomDates))
                 {
-                    simDateMatrix[,x]=calibrate(date=randomDates[x],sd=randomSDs[x],
-                                     marine=marine[x],DeltaR=DeltaR[x],DeltaRsd=DeltaRsd[x],
-                                     timeRange=yearRange,resolution=resolution,calCurves[x])[,2]
+                    simDateMatrix[,x]=calibrate(date=randomDates[x],error=randomSDs[x],
+                                     DeltaR=DeltaR[x],DeltaRsd=DeltaRsd[x],
+                                     timeRange=yearRange,calCurves[x])[,2]
                 }
 
             sim[,s]<-apply(simDateMatrix,1,sum)
@@ -266,9 +245,8 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
 ## regions ... value indicating membership to different sets 
 ## bins ... output of the binPrep() function
 ## date ... 14C dates
-## sd ... 14C error
+## error ... 14C error
 ## calCurves ... calibration curve (see Bchron documentation)
-## resolution ... output resolution (in years)
 ## DeltaR ... DeltaR for marine curves
 ## DeltaRsd ... DeltaRsd for marine curves
 ## marine ... set to TRUE for marine dates
@@ -277,12 +255,12 @@ nullTest<-function(bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,res
 ## raw ... if set to TRUE outputs individual simulations
 
 
-permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=NA,yearRange,resolution=5,nsim=1000,raw=TRUE,calCurves)
+permutationTest<-function(regions,bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,nsim=1000,raw=TRUE,calCurves)
     {
         require(Bchron) # Bchron v4.0
         
         ##Execute Calibration for Each Date
-        tmp=calibrate(date=0,sd=0,resolution=resolution,timeRange=yearRange) #retrieve size of the matrix
+        tmp=calibrate(date=0,error=0,timeRange=yearRange) #retrieve size of the matrix
         individualDatesMatrix<-matrix(NA,nrow=nrow(tmp),ncol=length(date))
 
         print("Calibrating Individual Dates...")
@@ -292,7 +270,9 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
         for (x in 1:length(date))
             {
               setTxtProgressBar(pb, x)
-              individualDatesMatrix[,x]=calibrate(date=date[x],sd=sd[x],marine=marine[x],DeltaR=DeltaR[x],DeltaRsd=DeltaRsd[x],timeRange=yearRange,resolution=resolution,calCurves=calCurves[x])[,2]
+              individualDatesMatrix[,x]=calibrate(date=date[x],error=error[x],
+                                       DeltaR=DeltaR[x],DeltaRsd=DeltaRsd[x],
+                                       timeRange=yearRange,calCurves=calCurves[x])[,2]
             }
         close(pb)
 
@@ -313,7 +293,6 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
                 if (length(index)>1)
                     {    
                         spd.tmp=apply(individualDatesMatrix[,index],1,sum)
-                      #  binnedMatrix[,b]=spd.tmp/sum(spd.tmp) #this is wrong
                         binnedMatrix[,b]=spd.tmp/length(index)
 
                     }
@@ -378,15 +357,15 @@ permutationTest<-function(regions,bins,date,sd,marine=FALSE,DeltaR=NA,DeltaRsd=N
         pValueList=numeric(length=length(simulatedSPD))
         for (x in 1:length(simulatedSPD))
             {
-                                        #Create Vector of Means
+                ##Create Vector of Means
                 zscoreMean=apply(simulatedSPD[[x]],1,mean)
-                                        #Create Vector of SDs
+                ##Create Vector of SDs
                 zscoreSD=apply(simulatedSPD[[x]],1,sd)
-                                        #Z-Transform observed and simulated
+                ##Z-Transform observed and simulated
                 tmp.sim=t(apply(simulatedSPD[[x]],1,function(x){return((x - mean(x))/sd(x))}))
                 tmp.obs=observedSPD[[x]]
                 tmp.obs[,2]=(tmp.obs[,2]-zscoreMean)/zscoreSD
-                                        #Compute CI
+                ##Compute CI
                 tmp.ci=t(apply(tmp.sim,1,quantile,prob=c(0.025,0.975)))
 
                 expectedstatistic=abs(apply(tmp.sim,2,function(x,y){a=x-y;i=which(a<0);return(sum(a[i]))},y=tmp.ci[,1]))+
@@ -430,7 +409,7 @@ plotSPDNull<-function(data, ...)
         require(zoo)
         
         obs=data$result[,1:2]
-        resolution=abs(obs[1,1]-obs[2,1])
+        resolution=1
 
         envelope=data$result[,3:4]
         yMax=max(envelope,obs[,2])
@@ -543,7 +522,7 @@ plotSPDSim<-function(data,index,yMax=NA, ...)
     {
         require(zoo)
         obs=data$observed[[index]]
-        resolution=abs(obs[1,1]-obs[2,1])
+        resolution=1
 
         envelope=data$envelope[[index]]
         if (is.na(yMax))
