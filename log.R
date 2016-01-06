@@ -128,36 +128,36 @@ length(unique(bins.hokkaido))
 
 ### Kanto ###
 set.seed(12345)
-unif.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,sd=c14dates.kanto$C14Error,
-    marine=rep(FALSE,nrow(c14dates.kanto)),DeltaR=rep(NA,nrow(c14dates.kanto)),DeltaRsd=rep(NA,nrow(c14dates.kanto)),
-    yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,resolution=10,edge=500,model="uniform",nsim=10000)
+unif.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,error=c14dates.kanto$C14Error,
+    DeltaR=rep(0,nrow(c14dates.kanto)),DeltaRsd=rep(0,nrow(c14dates.kanto)),
+    yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,edge=500,model="uniform",nsim=10000)
 
 set.seed(12345)
-exp.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,sd=c14dates.kanto$C14Error,
-    marine=rep(FALSE,nrow(c14dates.kanto)),DeltaR=rep(NA,nrow(c14dates.kanto)),DeltaRsd=rep(NA,nrow(c14dates.kanto)),
-    yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
+exp.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,error=c14dates.kanto$C14Error,
+    DeltaR=rep(0,nrow(c14dates.kanto)),DeltaRsd=rep(0,nrow(c14dates.kanto)),
+    yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,edge=500,model="exponential",nsim=10000)
 
 ### Aomori ###
 set.seed(12345)
-unif.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,sd=c14dates.aomori$C14Error,
-    marine=rep(FALSE,nrow(c14dates.aomori)),DeltaR=rep(NA,nrow(c14dates.aomori)),DeltaRsd=rep(NA,nrow(c14dates.aomori)),
-    yearRange=c(7000,3000),calCurves=c14dates.aomori$calCurve,resolution=10,edge=500,model="uniform",nsim=10000)
+unif.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,error=c14dates.aomori$C14Error,
+    DeltaR=rep(0,nrow(c14dates.aomori)),DeltaRsd=rep(0,nrow(c14dates.aomori)),
+    yearRange=c(7000,3000),calCurves=c14dates.aomori$calCurve,edge=500,model="uniform",nsim=10000)
 
 set.seed(12345)
-exp.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,sd=c14dates.aomori$C14Error,
-    marine=rep(FALSE,nrow(c14dates.aomori)),DeltaR=rep(NA,nrow(c14dates.aomori)),DeltaRsd=rep(NA,nrow(c14dates.aomori)),
-    yearRange=c(7000,3000),calCurves=c14dates.aomori$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
+exp.aomori=nullTest(bins=bins.aomori,date=c14dates.aomori$C14Age,error=c14dates.aomori$C14Error,
+    DeltaR=rep(0,nrow(c14dates.aomori)),DeltaRsd=rep(0,nrow(c14dates.aomori)),
+    yearRange=c(7000,3000),calCurves=c14dates.aomori$calCurve,edge=500,model="exponential",nsim=10000)
 
 ### Hokkaido ###
 set.seed(12345)
-unif.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,sd=c14dates.hokkaido$C14Error,
-    marine=rep(FALSE,nrow(c14dates.hokkaido)),DeltaR=rep(NA,nrow(c14dates.hokkaido)),DeltaRsd=rep(NA,nrow(c14dates.hokkaido)),
-    yearRange=c(7000,3000),calCurves=c14dates.hokkaido$calCurve,resolution=10,edge=500,model="uniform",nsim=10000)
+unif.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,error=c14dates.hokkaido$C14Error,
+    DeltaR=rep(0,nrow(c14dates.hokkaido)),DeltaRsd=rep(0,nrow(c14dates.hokkaido)),
+    yearRange=c(7000,3000),calCurves=c14dates.hokkaido$calCurve,edge=500,model="uniform",nsim=10000)
 
 set.seed(12345)
-exp.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,sd=c14dates.hokkaido$C14Error,
-    marine=rep(FALSE,nrow(c14dates.hokkaido)),DeltaR=rep(NA,nrow(c14dates.hokkaido)),DeltaRsd=rep(NA,nrow(c14dates.hokkaido)),
-    yearRange=c(7000,3000),calCurves=c14dates.hokkaido$calCurve,resolution=10,edge=500,model="exponential",nsim=10000)
+exp.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,error=c14dates.hokkaido$C14Error,
+    DeltaR=rep(0,nrow(c14dates.hokkaido)),DeltaRsd=rep(0,nrow(c14dates.hokkaido)),
+    yearRange=c(7000,3000),calCurves=c14dates.hokkaido$calCurve,edge=500,model="exponential",nsim=10000)
 
 
 ##### Plot RESULTS #######
@@ -193,19 +193,17 @@ binsFullHokAom<-binPrep(sites=HokAom$SiteID,dates=HokAom$C14Age,h=binSize)
 
 set.seed(12345)
 HokAomResLong<-permutationTest(regions=HokAom$Region,bins=binsFullHokAom,
-                               date=HokAom$C14Age,sd=HokAom$C14Error,
-                               marine=rep(FALSE,nrow(HokAom)),
-                               DeltaR=rep(NA,nrow(HokAom)),
-                               DeltaRsd=rep(NA,nrow(HokAom)),
-                               yearRange=c(7000,3000),resolution=10,
+                               date=HokAom$C14Age,error=HokAom$C14Error,
+                               DeltaR=rep(0,nrow(HokAom)),
+                               DeltaRsd=rep(0,nrow(HokAom)),
+                               yearRange=c(7000,3000),
                                raw=FALSE,nsim=10000,calCurves=HokAom$calCurve)
 set.seed(12345)
 HokAomResShort<-permutationTest(regions=HokAom$Region,bins=binsFullHokAom,
-                                date=HokAom$C14Age,sd=HokAom$C14Error,
-                                marine=rep(FALSE,nrow(HokAom)),
-                                DeltaR=rep(NA,nrow(HokAom)),
-                                DeltaRsd=rep(NA,nrow(HokAom)),
-                                yearRange=c(7000,4420),resolution=10,
+                                date=HokAom$C14Age,error=HokAom$C14Error,
+                                DeltaR=rep(0,nrow(HokAom)),
+                                DeltaRsd=rep(0,nrow(HokAom)),
+                                yearRange=c(7000,4420),
                                 raw=FALSE,nsim=10000,calCurves=HokAom$calCurve)
 
 ##Aomori vs Kanto
@@ -215,20 +213,18 @@ binsFullAomKanto<-binPrep(sites=AomKanto$SiteID,dates=AomKanto$C14Age,h=binSize)
 
 set.seed(12345)
 AomKantoResLong<-permutationTest(regions=AomKanto$Region,bins=binsFullAomKanto,
-                                 date=AomKanto$C14Age,sd=AomKanto$C14Error,
-                                 marine=rep(FALSE,nrow(AomKanto)),
-                                 DeltaR=rep(NA,nrow(AomKanto)),
-                                 DeltaRsd=rep(NA,nrow(AomKanto)),
-                                 yearRange=c(7000,3000),resolution=10,
+                                 date=AomKanto$C14Age,error=AomKanto$C14Error,
+                                 DeltaR=rep(0,nrow(AomKanto)),
+                                 DeltaRsd=rep(0,nrow(AomKanto)),
+                                 yearRange=c(7000,3000),
                                  raw=FALSE,nsim=10000,calCurves=AomKanto$calCurve)
 
 set.seed(12345)
 AomKantoResShort<-permutationTest(regions=AomKanto$Region,bins=binsFullAomKanto,
-                                 date=AomKanto$C14Age,sd=AomKanto$C14Error,
-                                 marine=rep(FALSE,nrow(AomKanto)),
-                                 DeltaR=rep(NA,nrow(AomKanto)),
-                                 DeltaRsd=rep(NA,nrow(AomKanto)),
-                                 yearRange=c(7000,4420),resolution=10,
+                                 date=AomKanto$C14Age,error=AomKanto$C14Error,
+                                 DeltaR=rep(0,nrow(AomKanto)),
+                                 DeltaRsd=rep(0,nrow(AomKanto)),
+                                 yearRange=c(7000,4420),
                                  raw=FALSE,nsim=10000,calCurves=AomKanto$calCurve)
 
 
@@ -242,20 +238,18 @@ binsFullHokkaidoKanto<-binPrep(sites=HokkaidoKanto$SiteID,dates=HokkaidoKanto$C1
 
 set.seed(12345)
 HokkaidoKantoResLong<-permutationTest(regions=HokkaidoKanto$Region,bins=binsFullHokkaidoKanto,
-                                      date=HokkaidoKanto$C14Age,sd=HokkaidoKanto$C14Error,
-                                      marine=rep(FALSE,nrow(HokkaidoKanto)),
-                                      DeltaR=rep(NA,nrow(HokkaidoKanto)),
-                                      DeltaRsd=rep(NA,nrow(HokkaidoKanto)),
-                                      yearRange=c(7000,3000),resolution=10,
+                                      date=HokkaidoKanto$C14Age,error=HokkaidoKanto$C14Error,
+                                      DeltaR=rep(0,nrow(HokkaidoKanto)),
+                                      DeltaRsd=rep(0,nrow(HokkaidoKanto)),
+                                      yearRange=c(7000,3000),
                                       raw=FALSE,nsim=10000,calCurves=HokkaidoKanto$calCurve)
 
 set.seed(12345)
 HokkaidoKantoResShort<-permutationTest(regions=HokkaidoKanto$Region,bins=binsFullHokkaidoKanto,
-                                      date=HokkaidoKanto$C14Age,sd=HokkaidoKanto$C14Error,
-                                      marine=rep(FALSE,nrow(HokkaidoKanto)),
-                                      DeltaR=rep(NA,nrow(HokkaidoKanto)),
-                                      DeltaRsd=rep(NA,nrow(HokkaidoKanto)),
-                                      yearRange=c(7000,4420),resolution=10,
+                                      date=HokkaidoKanto$C14Age,error=HokkaidoKanto$C14Error,
+                                      DeltaR=rep(0,nrow(HokkaidoKanto)),
+                                      DeltaRsd=rep(0,nrow(HokkaidoKanto)),
+                                      yearRange=c(7000,4420),
                                       raw=FALSE,nsim=10000,calCurves=HokkaidoKanto$calCurve)
 
 
