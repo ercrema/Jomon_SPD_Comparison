@@ -73,7 +73,7 @@ text(x=141.5101,y=36.57375,"Ibaraki",cex=1.5)
 text(x=137.4042,y=35.94444,"Saitama",cex=1.5)
 text(x=138.0187,y=35.56576,"Tokyo",cex=1.5)
 text(x=137.6419,y=35.16032,"Kanagawa",cex=1.5)
-dev.print(device=pdf,"./figures/figure1.pdf") 
+dev.print(device=pdf,"./figure1.pdf") 
 
 
 #############################
@@ -179,7 +179,7 @@ title(paste("Aomori: exponential null model (p-value<",round(exp.aomori$pval,4),
 plotSPDNull(exp.hokkaido)
 title(paste("Hokkaido: exponential null model (p-value<",round(exp.hokkaido$pval,4),")",sep=""))
 
-dev.print(device=pdf,"~/github/jomonSPD/figures/figure2.pdf") 
+dev.print(device=pdf,"./figure2.pdf") 
 
 #############################################
 ### SPD Analysis Part 2: Permutation Test ###
@@ -323,4 +323,4 @@ plotSPDSim(HokAomResLong,index=2,main="",yMax=0.01)
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
 
-dev.print(device=pdf,"~/github/jomonSPD/figures/figure3.pdf") 
+dev.print(device=pdf,"./figure3.pdf") 
