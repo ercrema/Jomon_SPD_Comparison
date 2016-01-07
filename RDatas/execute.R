@@ -13,8 +13,8 @@ source("./src.R")
 sites=read.csv("./data/sites.csv")
 c14dates=read.csv("./data/c14dates.csv")
 
-## c14dates=subset(c14dates,deltaC13<c(-26))
-## sites=subset(sites,SiteID%in%unique(c14dates$SiteID))
+##c14dates=subset(c14dates,deltaC13<c(-26))
+##sites=subset(sites,SiteID%in%unique(c14dates$SiteID))
 
 #################
 ### Data Prep. ##
@@ -33,8 +33,8 @@ bins.aomori<-binPrep(sites=c14dates.aomori$SiteID,dates=c14dates.aomori$C14Age,h
 bins.hokkaido<-binPrep(sites=c14dates.hokkaido$SiteID,dates=c14dates.hokkaido$C14Age,h=binSize)
 
 
-save.image("./RDatas/intermediate1.RData")
-##save.image("./RDatas/SI_26/intermediate1.RData") for DeltaC < -26 Threshold 
+save.image("./RDatas/intermediate1_24.RData")
+##save.image("./RDatas/intermediate1_26.RData") # for DeltaC < -26 Threshold 
 
 ################################################################
 ### SPD Analysis Part 1: Exponential and Uniform Null Models ###
@@ -43,8 +43,8 @@ save.image("./RDatas/intermediate1.RData")
 ### Kanto ###
 set.seed(12345)
 unif.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,error=c14dates.kanto$C14Error,
-    DeltaR=rep(0,nrow(c14dates.kanto)),DeltaRsd=rep(0,nrow(c14dates.kanto)),
-    yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,edge=500,model="uniform",nsim=10000)
+    DeltaR=rep(0,nrow(c14dates.kanto)),DeltaRsd=rep(0,nrow(c14dates.kanto)),yearRange=c(7000,3000),calCurves=c14dates.kanto$calCurve,edge=500,model="uniform",nsim=10000)
+
 
 set.seed(12345)
 exp.kanto=nullTest(bins=bins.kanto,date=c14dates.kanto$C14Age,error=c14dates.kanto$C14Error,
