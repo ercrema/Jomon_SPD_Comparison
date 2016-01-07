@@ -44,7 +44,7 @@ calibrate<-function(date, error, calCurves='intcal13', DeltaR=0 ,DeltaRsd=0,time
     require(Bchron)
     date=date-DeltaR
     error=error+DeltaRsd
-    tmp = BchronCalibrate(ages=date,ageSds=error,calCurves=calCurves)
+    tmp = BchronCalibrate(ages=date,ageSds=error,calCurves=calCurves,eps=0)
     calBP=rev(as.numeric(tmp[[1]][4][[1]]))
     prob=rev(as.numeric(tmp[[1]][[5]]))
     calBP.out=seq(50000,0,-1)
@@ -52,7 +52,7 @@ calibrate<-function(date, error, calCurves='intcal13', DeltaR=0 ,DeltaRsd=0,time
     index=which(calBP.out%in%calBP)
     prob.out[index]=prob
     res=cbind(calBP.out,prob.out)
-    res=res[which(calBP.out<timeRange[1]&calBP.out>timeRange[2]),]
+    res=res[which(calBP.out<=timeRange[1]&calBP.out>=timeRange[2]),]
     return(res)
 }
 
@@ -157,7 +157,12 @@ nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=
     ##Normalise to 1
     finalSPD <- finalSPD/sum(finalSPD)
 
-    ##Fit Exponential Model ## 
+    min(finalSPD[finalSPD!=0])/10000    
+    ##Fit Exponential Model ##
+
+    plusoffset=min(finalSPD[finalSPD!=0])/10000 
+    finalSPD=finalSPD+plusoffset #add positive jitter to avoid log(0)
+    
     fit <- lm(log(finalSPD)~tmp[,1])
     time=seq(min(tmp[,1])-edge,max(tmp[,1])+edge,1)
     
@@ -196,6 +201,7 @@ nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=
 
             sim[,s]<-apply(simDateMatrix,1,sum)
             sim[,s]=sim[,s]/sum(sim[,s])
+            sim[,s]=sim[,s]+plusoffset
         }
 
     ## Empirical 95% Intervals ##
@@ -204,8 +210,8 @@ nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=
 
     ## Z-score ##
     Zsim<-t(apply(sim,1,scale))
-    zLo=apply(Zsim,1,quantile,prob=0.025)
-    zHi=apply(Zsim,1,quantile,prob=0.975)
+    zLo=apply(Zsim,1,quantile,prob=0.025,na.rm=TRUE)
+    zHi=apply(Zsim,1,quantile,prob=0.975,na.rm=TRUE)
 
     ## z-score observed data ##
     Zscore_empirical <- (finalSPD - apply(sim, 1, mean))/apply(sim, 1, sd)
