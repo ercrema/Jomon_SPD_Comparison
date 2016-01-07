@@ -26,54 +26,32 @@ binPrep<-function(sites,dates,h=200)
         return(clusters)
     }
 
-################################################
-## Calibration Function (adapted from BChron) ##
-################################################
+#############################################################################
+## Calibration Function (wrapper for BChron's  BchronCalibrate() function) ##
+#############################################################################
 
 ### PARAMETERS:
 ## date ... 14C dates
-## sd ... 14C error
+## error ... 14C error
 ## calCurves ... calibration curve (see Bchron documentation)
-## resolution ... output resolution (in years)
 ## DeltaR ... DeltaR for marine curves
 ## DeltaRsd ... DeltaRsd for marine curves
-## marine ... set to TRUE for marine dates
 ## timeRange ... output time range
 
-
-calibrate<-function (date, sd, calCurves='intcal13',resolution=1, DeltaR ,DeltaRsd, marine=FALSE,timeRange=NA) 
+calibrate<-function(date, error, calCurves='intcal13', DeltaR=0 ,DeltaRsd=0,timeRange=c(10000,0)) 
 {
-    require(Bchron) # Bchron v4.0
-    if (marine==TRUE)
-        {
-            date=date-DeltaR
-            sd=sd+DeltaRsd
-            if (calCurves!='marine13')
-                {
-                    stop("Calibration curve is not marine")
-                }
-        }    
-    pathToCalCurves=system.file("data", package = "Bchron")
-    calCurveFile = paste(pathToCalCurves, "/", calCurves,".txt.gz", sep = "")
-    calcurve=as.matrix(read.table(calCurveFile))
-    calbp = calcurve[, 1]
-    c14bp = calcurve[, 2]
-    calsd = calcurve[, 3]
-    if (date > max(calbp) | date < min(calbp)) 
-        stop("Radiocarbon date outside of calibration curve range")
-    agegrid = seq(min(calbp), max(calbp), by = resolution)
-    mu = approx(calbp, c14bp, xout = agegrid)$y
-    tau = sd^2 + approx(calbp, calsd, xout = agegrid)$y
-    dens = dnorm(date, mean = mu, sd = sqrt(tau))
-    dens = dens/sum(dens)
-    CalBPdates = agegrid
-    Prob = dens
-    res=cbind(CalBPdates,Prob)
-    if (any(!is.na(timeRange)))
-        {
-            index=which(res[,1]<=timeRange[1]&res[,1]>=timeRange[2])
-            res=res[index,]
-        }
+    require(Bchron)
+    date=date-DeltaR
+    error=error+DeltaRsd
+    tmp = BchronCalibrate(ages=date,ageSds=error,calCurves=calCurves,eps=0)
+    calBP=rev(as.numeric(tmp[[1]][4][[1]]))
+    prob=rev(as.numeric(tmp[[1]][[5]]))
+    calBP.out=seq(50000,0,-1)
+    prob.out=rep(0,length=length(calBP.out))
+    index=which(calBP.out%in%calBP)
+    prob.out[index]=prob
+    res=cbind(calBP.out,prob.out)
+    res=res[which(calBP.out<=timeRange[1]&calBP.out>=timeRange[2]),]
     return(res)
 }
 
@@ -99,9 +77,9 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
     ## uncalibrate CAL BP dates, interpolating with approx
     dates <- data.frame(approx(calcurve, xout = dates))
     colnames(dates) <- c("CALBP", "C14BP")
-    calcurve.error <- approx(calcurve[,c(1,3)], xout = dates$CAL.BP)$y
+    calcurve.error <- approx(calcurve[,c(1,3)], xout = dates$CALBP)$y
     dates$Error <- sqrt(error^2 + calcurve.error^2)
-    if(random==TRUE){dates$C14.Age=round(rnorm(nrow(dates),mean=dates$C14.Age,sd=dates$Error))}
+    if(random==TRUE){dates$C14.Age=round(rnorm(nrow(dates),mean=dates$C14BP,sd=dates$Error))}
     return(dates)
 }
 
