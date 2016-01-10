@@ -41,7 +41,8 @@ save.image("./part3_24.RData")
 
 load("./part1_24.RData") 
 load("./part2_24.RData") 
-load("./part3_24.RData") 
+load("./part3_24.RData")
+save.image("intermediate2_24.RData")
 
 
 
@@ -105,3 +106,5 @@ save.image("./part3_26.RData")
 load("./part1_26.RData") 
 load("./part2_26.RData") 
 load("./part3_26.RData") 
+save.image("intermediate2_26.RData")
+
