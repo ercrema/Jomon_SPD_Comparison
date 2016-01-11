@@ -1,5 +1,6 @@
 ## Load DATA ##
-load("./RDatas/final.RData")
+##load("./RDatas/final_24.RData")
+load("./RDatas/final_26.RData")
 
 #######################################
 ## Figure 1: Map of Sample Locations ##
@@ -72,21 +73,22 @@ library(zoo) #for plotting SPD outputs //version 1.7-12
 options(scipen=999) #Ensure p-values are displayed in non-scientific annotation 
 par(mfrow=c(2,3),family="Times")
 par(mar=c(4.5, 4, 1.5, 1))
-plotSPDNull(unif.kanto)
+plotSPDNull(unif.kanto,yMax=0.0009)
 title("Kanto: uniform null model")
-plotSPDNull(unif.aomori)
+plotSPDNull(unif.aomori,yMax=0.0009)
 title("Aomori: uniform null model")
-plotSPDNull(unif.hokkaido)
+plotSPDNull(unif.hokkaido,yMax=0.0009)
 title("Hokkaido: uniform null model")
 
-plotSPDNull(exp.kanto)
+plotSPDNull(exp.kanto,yMax=0.0009)
 title("Kanto: exponential null model")
-plotSPDNull(exp.aomori)
+plotSPDNull(exp.aomori,yMax=0.0009)
 title("Aomori: exponential null model")
-plotSPDNull(exp.hokkaido)
+plotSPDNull(exp.hokkaido,yMax=0.0009)
 title("Hokkaido: exponential null model")
-legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(0.5,2,5,5,5),cex=0.75,bg="white")
-dev.print(device=pdf,useDingbats=FALSE,"./figures/figure2.pdf")
+legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(0.5,2,5,5,5),cex=0.8,bg="white")
+##dev.print(device=pdf,useDingbats=FALSE,"~/github/jomonSPD/figures/figure2.pdf")
+dev.print(device=pdf,useDingbats=FALSE,"~/github/jomonSPD/figures/figure2_si.pdf")
 
 #####################################
 ## Figure 3: SPD Permutation Tests ##
@@ -118,19 +120,20 @@ mtext(side=2,"Hokkaido",line=-2)
 par(mar=c(1.5,1,1,1))
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
-plotSPDSim(AomKantoResLong,index=2,main="",yMax=0.01)
-plotSPDSim(HokkaidoKantoResLong,index=1,main="",yMax=0.01)
+plotSPDSim(AomKantoResLong,index=2,main="",yMax=0.0009)
+plotSPDSim(HokkaidoKantoResLong,index=1,main="",yMax=0.0009)
 
 ##Aomori
-plotSPDSim(AomKantoResLong,index=1,main="",yMax=0.01)
+plotSPDSim(AomKantoResLong,index=1,main="",yMax=0.0009)
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
-plotSPDSim(HokAomResLong,index=1,main="",yMax=0.01)
+plotSPDSim(HokAomResLong,index=1,main="",yMax=0.0009)
 
 ##Hokkaido
-plotSPDSim(HokkaidoKantoResLong,index=2,main="",yMax=0.01)
-plotSPDSim(HokAomResLong,index=2,main="",yMax=0.01)
+plotSPDSim(HokkaidoKantoResLong,index=2,main="",yMax=0.0009)
+plotSPDSim(HokAomResLong,index=2,main="",yMax=0.0009)
 legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(0.5,2,5,5,5),cex=0.8,bg="white")
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
-dev.print(device=pdf,useDingbats=FALSE,"./figures/figure3.pdf")
+##dev.print(device=pdf,useDingbats=FALSE,"./figures/figure3.pdf")
+dev.print(device=pdf,useDingbats=FALSE,"~/github/jomonSPD/figures/figure3_si.pdf")
