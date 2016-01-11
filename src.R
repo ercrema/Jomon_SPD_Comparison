@@ -409,6 +409,7 @@ permutationTest<-function(regions,bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,
 
 ### PARAMETERS:
 ## data ... output of the nullTest() function
+## yMax ... maximum value for the y-axis
 
 plotSPDNull<-function(data,yMax=NA, ...)
     {
@@ -526,6 +527,7 @@ plotSPDNull<-function(data,yMax=NA, ...)
 ## data ... output of the permutationTest() function
 ## index ... region index value for defining plot output
 ## yMax ... maximum value for the y-axis
+
 plotSPDSim<-function(data,index,yMax=NA, ...)
     {
         require(zoo)

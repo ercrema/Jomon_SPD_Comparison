@@ -163,21 +163,22 @@ exp.hokkaido=nullTest(bins=bins.hokkaido,date=c14dates.hokkaido$C14Age,error=c14
 ##### Plot RESULTS #######
 
 options(scipen=999) #Ensure p-values are displayed in non-scientific annotation 
-par(mfrow=c(2,3))
-plotSPDNull(unif.kanto)
-title(paste("Kanto: uniform null model (p-value=",round(unif.kanto$pval,4),")",sep=""))
-plotSPDNull(unif.aomori)
-title(paste("Aomori: uniform null model (p-value=",round(unif.aomori$pval,4),")",sep=""))
-plotSPDNull(unif.hokkaido)
-title(paste("Hokkaido: uniform null model (p-value=",round(unif.hokkaido$pval,4),")",sep=""))
+par(mfrow=c(2,3),family="Times")
+par(mar=c(4.5, 4, 1.5, 1))
+plotSPDNull(unif.kanto,yMax=0.0009)
+title("Kanto: uniform null model")
+plotSPDNull(unif.aomori,yMax=0.0009)
+title("Aomori: uniform null model")
+plotSPDNull(unif.hokkaido,yMax=0.0009)
+title("Hokkaido: uniform null model")
 
-plotSPDNull(exp.kanto)
-title(paste("Kanto: exponential null model (p-value<",round(exp.kanto$pval,4),")",sep=""))
-legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(1,2,5,5,5),cex=1)
-plotSPDNull(exp.aomori)
-title(paste("Aomori: exponential null model (p-value<",round(exp.aomori$pval,4),")",sep=""))
-plotSPDNull(exp.hokkaido)
-title(paste("Hokkaido: exponential null model (p-value<",round(exp.hokkaido$pval,4),")",sep=""))
+plotSPDNull(exp.kanto,yMax=0.0009)
+title("Kanto: exponential null model")
+plotSPDNull(exp.aomori,yMax=0.0009)
+title("Aomori: exponential null model")
+plotSPDNull(exp.hokkaido,yMax=0.0009)
+title("Hokkaido: exponential null model")
+legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(0.5,2,5,5,5),cex=0.8,bg="white")
 
 dev.print(device=pdf,"./figure2.pdf") 
 
@@ -284,11 +285,10 @@ resultPairwiseShort[3,2]=HokAomResShort$pValueList[2]
 
 
 
-## Plot Matrix Example ##
+## Plot ##
 
 layout(matrix(c(1:4,5,8:10,6,11:13,7,14:16),byrow=TRUE,4,4),width=c(0.15,1,1,1),height=c(0.15,1,1,1))
-layout.show(n = 16)
-par(mar=c(0,0,0,0))
+par(mar=c(0,0,0,0),family="Times")
 plot(runif(1),axes=F,xlab="",ylab="",type="n")
 plot(runif(1),axes=F,xlab="",ylab="",type="n")
 mtext(side=1,"Kanto",line=-2)
@@ -308,18 +308,19 @@ mtext(side=2,"Hokkaido",line=-2)
 par(mar=c(1.5,1,1,1))
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
-plotSPDSim(AomKantoResLong,index=2,main="",yMax=0.01)
-plotSPDSim(HokkaidoKantoResLong,index=1,main="",yMax=0.01)
+plotSPDSim(AomKantoResLong,index=2,main="",yMax=0.0009)
+plotSPDSim(HokkaidoKantoResLong,index=1,main="",yMax=0.0009)
 
 ##Aomori
-plotSPDSim(AomKantoResLong,index=1,main="",yMax=0.01)
+plotSPDSim(AomKantoResLong,index=1,main="",yMax=0.0009)
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
-plotSPDSim(HokAomResLong,index=1,main="",yMax=0.01)
+plotSPDSim(HokAomResLong,index=1,main="",yMax=0.0009)
 
 ##Hokkaido
-plotSPDSim(HokkaidoKantoResLong,index=2,main="",yMax=0.01)
-plotSPDSim(HokAomResLong,index=2,main="",yMax=0.01)
+plotSPDSim(HokkaidoKantoResLong,index=2,main="",yMax=0.0009)
+plotSPDSim(HokAomResLong,index=2,main="",yMax=0.0009)
+legend("topleft",legend=c("SPD","RollingMean","CI","Positive Deviation","Negative Deviation"),col=c(1,1,"lightgrey","indianred","royalblue"),lty=c(1,2,1,1,1),lwd=c(0.5,2,5,5,5),cex=0.8,bg="white")
 plot(runif(1),axes=F,xlab="",ylab="",type="n",xlim=c(0,1),ylim=c(0,1))
 text(0.5,0.5,"NA",cex=2)
 
