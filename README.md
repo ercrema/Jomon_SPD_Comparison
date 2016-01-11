@@ -1,5 +1,5 @@
 # jomonSPD
-Source Codes, Scripts, and Data for the paper "Summed Probability Distribution of 14C Dates suggest divergence in the population dynamics of Central and Northern Japan during the Jomon Period" by Crema, E.R., Habu, J., Kobayashi, K., and Madella, M.
+Source Codes, Scripts, and Data for the paper "Summed Probability Distribution of 14C Dates suggests Regional Divergences in the Population Dynamics of the Jomon Period in Eastern Japan" by Crema, E.R., Habu, J., Kobayashi, K., and Madella, M.
 
 ## Paper Reference 
 
