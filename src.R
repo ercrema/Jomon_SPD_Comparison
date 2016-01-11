@@ -410,7 +410,7 @@ permutationTest<-function(regions,bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,
 ### PARAMETERS:
 ## data ... output of the nullTest() function
 
-plotSPDNull<-function(data, ...)
+plotSPDNull<-function(data,yMax=NA, ...)
     {
         require(zoo)
         
@@ -418,13 +418,15 @@ plotSPDNull<-function(data, ...)
         resolution=1
 
         envelope=data$result[,3:4]
-        yMax=max(envelope,obs[,2])
-        
+        if (is.na(yMax))
+            {
+                yMax=max(envelope,obs[,2])
+            }
         booms=which(obs[,2]>envelope[,2])
         busts=which(obs[,2]<envelope[,1])
         baseline=rep(0,nrow(obs))
         plot(obs[,1],obs[,2],xlim=c(max(obs[,1]),min(obs[,1])),ylim=c(0,yMax),
-             xlab="cal BP",ylab="SPD",type="l",col=1,lwd=0.5,...)
+             xlab="cal BP",ylab="Normalised Summed Probability",type="l",col=1,lwd=0.5,...)
 
         boomPlot=baseline
         boomPlot[booms]=obs[booms,2]
@@ -511,7 +513,7 @@ plotSPDNull<-function(data, ...)
         
         polygon(x=c(obs[,1],rev(obs[,1])),y=c(envelope[,1],rev(envelope[,2])),col=rgb(0,0,0,0.2),border=NA)
         spdSmooth<-rollmean(obs[,2],k=200/resolution,fill=NA)
-        lines(obs[,1],spdSmooth,col=1,lwd=2,lty=2)
+        lines(obs[,1],spdSmooth,col=1,lwd=2.5,lty=2)
         axis(side=1,at=seq(max(obs[,1]),min(obs[,1]),-100),labels=NA,tck = -.01)
        
     }
@@ -538,7 +540,7 @@ plotSPDSim<-function(data,index,yMax=NA, ...)
         busts=which(obs[,2]<envelope[,1])
         baseline=rep(0,nrow(obs))
         plot(obs[,1],obs[,2],xlim=c(max(obs[,1]),min(obs[,1])),ylim=c(0,yMax),
-             xlab="cal BP",ylab="SPD",type="l",col=1,lwd=0.5,axes=FALSE,...)
+             xlab="cal BP",ylab="Normalised Summed Probability",type="l",col=1,lwd=0.5,axes=FALSE,...)
         axis(side=1,padj=-1)
         axis(side=2,padj=1)
         box()
