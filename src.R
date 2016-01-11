@@ -182,6 +182,7 @@ nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=
         {
             setTxtProgressBar(pb, s)
             ##simulate random dates in calendar date and uncalibrate to C14 dates (±edge yrs for edge effect)
+            ##NB: dates are created as terrestrial using the intcal13 curve
             if (model=="uniform")
                 {randomDates<-round(runif(length(unique(bins)),rev(yearRange)[1]-edge,rev(yearRange)[2]+edge))}
             if (model=="exponential")
@@ -195,8 +196,8 @@ nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=
             for (x in 1:length(randomDates))
                 {
                     simDateMatrix[,x]=calibrate(date=randomDates[x],error=randomSDs[x],
-                                     DeltaR=DeltaR[x],DeltaRsd=DeltaRsd[x],
-                                     timeRange=yearRange,calCurves[x])[,2]
+                                     DeltaR=0,DeltaRsd=0,
+                                     timeRange=yearRange,calCurves='intcal13')[,2]
                 }
 
             sim[,s]<-apply(simDateMatrix,1,sum)
