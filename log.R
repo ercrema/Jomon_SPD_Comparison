@@ -116,8 +116,8 @@ length(unique(bins.aomori))
 ##Aomori nb=89 Reduced
 ##Aomori nb=128 Full Sample
 length(unique(bins.hokkaido))
-##Hokkaido nb=137
-##Hokkaido nb=187
+##Hokkaido nb=137 Reduced
+##Hokkaido nb=187 Full Sample
 
 ################################################################
 ### SPD Analysis Part 1: Exponential and Uniform Null Models ###
