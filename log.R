@@ -29,7 +29,7 @@ c14dates=read.csv("./data/c14dates.csv")
 detach("package:GISTools", unload=TRUE) #Unload GISTools temporarily#
 basemap <- getMap(resolution = "high")
 layout(matrix(c(1,2,2,2,2,2,2,2,2),3,3),height=c(1,0.8,0.8))
-par(mar=c(0,0,0,0))
+par(mar=c(0,0,0,0),family="Times")
 plot(basemap, col = "lightgrey", border = NA,xlim = c(114,149),ylim = c(24,50))
 rect(xleft=135.2895, ybottom=35.16062, xright= 147, ytop=45)
 box()   
