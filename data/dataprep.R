@@ -1,14 +1,3 @@
-#### Data Preparation Code (Not to be made public in the final version) ####
-
-source("~/github/SPDC14/src/calibrate.R")
-source("~/github/SPDC14/src/binFuns.R")
-source('~/github/SPDC14/src/permutationTest.R')
-source('~/github/SPDC14/src/plotFuns.R')
-source('~/github/SPDC14/src/uniformTest.R')
-source('~/github/SPDC14/src/spd.R')
-source('~/github/SPDC14/src/nullTest.R')
-source('~/github/SPDC14/src/uncalibrate.R')
-
 ### Load Data ###
 library("RSQLite")
 con=dbConnect(SQLite(),dbname="~/Dropbox/nicoss/C14Database/JomonC14.sqlite")
