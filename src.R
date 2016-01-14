@@ -98,7 +98,6 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
 ## calCurves ... calibration curve (see Bchron documentation)
 ## DeltaR ... DeltaR for marine curves
 ## DeltaRsd ... DeltaRsd for marine curves
-## marine ... set to TRUE for marine dates
 ## yearRange ... output time range
 ## nsim ... number of simulations
 ## edge ... edge effect correction
@@ -256,7 +255,6 @@ nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=
 ## calCurves ... calibration curve (see Bchron documentation)
 ## DeltaR ... DeltaR for marine curves
 ## DeltaRsd ... DeltaRsd for marine curves
-## marine ... set to TRUE for marine dates
 ## yearRange ... output time range
 ## nsim ... number of simulations
 ## raw ... if set to TRUE outputs individual simulations
