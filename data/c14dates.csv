@@ -227,8 +227,8 @@
 340,5,5077,84,"NUTA-5369",-25.9,NA,"Wood","intcal13",2
 341,5,5108,196,"NUTA-5446",-26.6,NA,"Wood","intcal13",2
 342,5,4970,119,"NUTA-5448",-26.8,NA,"Wood","intcal13",2
-343,5,4980,40,"Beta-119437",-27.2,NA,"Charred Remain","intcal13",2
-344,5,5050,40,"Beta-119438",-26.4,NA,"Charred Remain","intcal13",2
+343,50,4980,40,"Beta-119437",-27.2,NA,"Charred Remain","intcal13",2
+344,50,5050,40,"Beta-119438",-26.4,NA,"Charred Remain","intcal13",2
 351,5,4850,50,"Beta-115998",-25.7,NA,"Wood","intcal13",2
 352,5,4970,50,"Beta-115999",-26.8,NA,"Wood","intcal13",2
 353,5,4780,70,"Beta-127603",-27,NA,"Charred Remain","intcal13",2
