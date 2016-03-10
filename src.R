@@ -513,7 +513,7 @@ plotSPDNull<-function(data,yMax=NA, ...)
         
         polygon(x=c(obs[,1],rev(obs[,1])),y=c(envelope[,1],rev(envelope[,2])),col=rgb(0,0,0,0.2),border=NA)
         spdSmooth<-rollmean(obs[,2],k=200/resolution,fill=NA)
-        lines(obs[,1],spdSmooth,col=1,lwd=2.5,lty=2)
+        lines(obs[,1],spdSmooth,col=1,lwd=2.5,lty=1)
         axis(side=1,at=seq(max(obs[,1]),min(obs[,1]),-100),labels=NA,tck = -.01)
        
     }
@@ -630,6 +630,6 @@ plotSPDSim<-function(data,index,yMax=NA, ...)
         
         polygon(x=c(obs[,1],rev(obs[,1])),y=c(envelope[,1],rev(envelope[,2])),col=rgb(0,0,0,0.2),border=NA)
         spdSmooth<-rollmean(obs[,2],k=200/resolution,fill=NA)
-        lines(obs[,1],spdSmooth,col=1,lwd=2,lty=2)
+        lines(obs[,1],spdSmooth,col=1,lwd=2,lty=1)
         axis(side=1,at=seq(max(obs[,1]),min(obs[,1]),-100),labels=NA,tck = -.01)  
     }
