@@ -96,8 +96,8 @@ length(unique(c14dates.kanto$SiteID))
 ## n=41 Reduced
 ## n=47 Full Sample
 length(unique(c14dates.aomori$SiteID))
-## n=47 Reduced
-## n=57 Full Sample
+## n=48 Reduced
+## n=57 Full Sample 
 length(unique(c14dates.hokkaido$SiteID))
 ## n=71 Reduced
 ## n=82 Full Sample
