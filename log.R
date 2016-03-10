@@ -113,8 +113,8 @@ length(unique(bins.kanto))
 ##Kanto nb=75 Reduced
 ##Kanto nb=87 Full Sample
 length(unique(bins.aomori))
-##Aomori nb=89 Reduced
-##Aomori nb=128 Full Sample
+##Aomori nb=90 Reduced
+##Aomori nb=129 Full Sample
 length(unique(bins.hokkaido))
 ##Hokkaido nb=137 Reduced
 ##Hokkaido nb=187 Full Sample
