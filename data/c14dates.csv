@@ -313,7 +313,7 @@
 455,37,3900,50,"Beta-167979",-28.1,NA,"Wood","intcal13",2
 457,51,3100,40,"IAAA-31759",-24.41,0.82,"Wood","intcal13",2
 458,51,4460,60,"IAAA-31760",-24.3,0.72,"Wood","intcal13",2
-459,51,30110,30,"IAAA-31761",-25.56,0.79,"Wood","intcal13",2
+459,51,3011,30,"IAAA-31761",-25.56,0.79,"Wood","intcal13",2
 462,51,3510,26,"PLD-7690",-26.59,NA,"Pottery Food Residue","intcal13",2
 464,51,4718,25,"PLD-7367",-26.55,NA,"Pottery Food Residue","intcal13",2
 465,51,4452,26,"PLD-7691",-28.65,NA,"Pottery Food Residue","intcal13",2
@@ -892,15 +892,11 @@
 1520,245,3790,40,"IAAA-41471",-24.35,0.59,"Wood","intcal13",3
 1522,245,3780,40,"IAAA-41473",-24.68,0.81,"Wood","intcal13",3
 1524,245,4160,40,"IAAA-41475",-24.84,0.63,"Wood","intcal13",3
-1525,273,2430,40,"IAAA-51595",-31.95,0.85,"Wood","intcal13",3
 1529,273,2550,30,"IAAA-51599",-24.32,0.87,"Wood","intcal13",3
-1530,273,2490,40,"IAAA-51600",-26.84,0.88,"Wood","intcal13",3
-1531,273,2450,40,"IAAA-51601",-32.23,0.84,"Charred Remain","intcal13",3
 1533,273,2510,30,"IAAA-51603",-25.71,0.76,"Charred Remain","intcal13",3
 1534,273,2550,40,"IAAA-51604",-25.91,0.85,"Charred Remain","intcal13",3
 1536,273,2580,30,"IAAA-51606",-24.35,0.83,"Wood","intcal13",3
 1539,273,2850,30,"IAAA-51609",-24.72,0.71,"Charred Remain","intcal13",3
-1543,273,2480,30,"IAAA-51972",-27.74,0.76,"Charred Remain","intcal13",3
 1554,247,5350,40,"IAAA-51611",-26.91,0.85,"Charred Remain","intcal13",3
 1556,247,5390,40,"IAAA-51613",-25.65,0.95,"Charred Remain","intcal13",3
 1557,247,5390,40,"IAAA-51614",-25.4,0.95,"Seed/Nut","intcal13",3
@@ -926,8 +922,8 @@
 1595,247,5415,30,"PLD-3419",-28.1,NA,"Seed/Nut","intcal13",3
 1596,247,5345,30,"PLD-3420",-24.1,NA,"Seed/Nut","intcal13",3
 1597,247,5340,30,"PLD-3421",-26.4,NA,"Seed/Nut","intcal13",3
-1600,273,2460,40,"Beta-174544",-27.5,NA,"Seed/Nut","intcal13",3
 1604,273,2530,40,"Beta-174548",-24.4,NA,"Charred Remain","intcal13",3
+1605,273,2500,40,"Beta-174549",-24.4,NA,"Charred Remain","intcal13",3
 1606,271,3290,40,"Beta-174528",-24.9,NA,"Charred Remain","intcal13",3
 1607,270,3840,40,"Beta-174519",-25.7,NA,"Charred Remain","intcal13",3
 1608,270,3600,40,"Beta-174520",-25.8,NA,"Charred Remain","intcal13",3
@@ -995,7 +991,6 @@
 1682,263,3190,40,"Beta-155468",-30.1,NA,"Lacquer","intcal13",3
 1683,263,2920,40,"IAAA-10396",-26.84,1.4,"Lacquer","intcal13",3
 1684,262,2540,40,"Beta-150458",-28,NA,"Charred Remain","intcal13",3
-1685,262,2470,60,"Beta-150459",-27,NA,"Charred Remain","intcal13",3
 1687,260,2740,40,"IAAA-10569",-24.39,1.37,"Charred Remain","intcal13",3
 1688,260,3670,40,"IAAA-10570",-26.27,1.45,"Charred Remain","intcal13",3
 1689,260,3880,40,"IAAA-10571",-25.99,1.51,"Charred Remain","intcal13",3
@@ -1050,8 +1045,8 @@
 1868,303,4700,40,"Beta-138358",-26.5,NA,"Charred Remain","intcal13",3
 1869,303,4700,50,"Beta-138259",-24.9,NA,"Charred Remain","intcal13",3
 1870,303,4570,40,"Beta-138360",-26.1,NA,"Charred Remain","intcal13",3
-1875,273,2470,60,"Beta-138134",-26.8,NA,"Charred Remain","intcal13",3
 1880,273,2510,60,"Beta-138139",-26,NA,"Charred Remain","intcal13",3
+1883,273,2510,60,"Beta-138142",-239.9,NA,"Charred Remain","intcal13",3
 1884,273,2560,60,"Beta-138143",-25.5,NA,"Charred Remain","intcal13",3
 1885,273,2530,60,"Beta-138144",-24.5,NA,"Charred Remain","intcal13",3
 1886,273,2540,60,"Beta-138145",-26.7,NA,"Charred Remain","intcal13",3
@@ -1108,6 +1103,7 @@
 1950,311,4460,40,"Beta-163048",-27.2,NA,"Charred Remain","intcal13",3
 1951,311,4490,40,"Beta-163049",-25,NA,"Charred Remain","intcal13",3
 1952,311,4500,40,"Beta-163050",-26.8,NA,"Charred Remain","intcal13",3
+1960,273,2500,40,"Beta-163083",-24.6,NA,"Charred Remain","intcal13",3
 1961,273,2920,40,"Beta-150489",-28.8,NA,"Seed/Nut","intcal13",3
 1962,273,2910,40,"Beta-150490",-30.4,NA,"Seed/Nut","intcal13",3
 1963,273,2840,40,"Beta-150491",-25.4,NA,"Seed/Nut","intcal13",3
@@ -1167,7 +1163,6 @@
 2064,326,2505,26,"IAAA-72154",-27.6,0.41,"Wood","intcal13",3
 2065,326,2542,25,"IAAA-72155",-25.74,0.6,"Wood","intcal13",3
 2067,326,2511,26,"IAAA-72157",-26.23,0.72,"Wood","intcal13",3
-2068,326,2499,26,"IAAA-72158",-29.57,0.67,"Wood","intcal13",3
 2069,326,2545,26,"IAAA-72159",-24.77,0.72,"Wood","intcal13",3
 2070,326,2601,26,"IAAA-72160",-24.79,0.38,"Wood","intcal13",3
 2071,326,2554,26,"IAAA-72161",-26.44,0.41,"Wood","intcal13",3
@@ -1228,7 +1223,6 @@
 2152,273,2505,24,"PLD-3926",-29.07,0.2,"Charred Remain","intcal13",3
 2155,273,2524,19,"PLD-3929",-25.18,0.11,"Charred Remain","intcal13",3
 2156,273,2522,21,"PLD-3930",-26.49,0.12,"Charred Remain","intcal13",3
-2157,273,2498,19,"PLD-3931",-25.81,0.11,"Charred Remain","intcal13",3
 2159,273,2529,19,"PLD-3933",-24.14,0.14,"Charred Remain","intcal13",3
 2161,273,2521,19,"PLD-3935",-24.69,0.12,"Charred Remain","intcal13",3
 2163,273,2529,19,"PLD-3937",-24.28,0.15,"Charred Remain","intcal13",3
@@ -1240,7 +1234,6 @@
 2193,273,2518,22,"PLD-4233",-28.42,0.15,"Charred Remain","intcal13",3
 2196,273,2506,22,"PLD-4236",-24.48,0.13,"Charred Remain","intcal13",3
 2197,273,2513,21,"PLD-4237",-25.14,0.12,"Charred Remain","intcal13",3
-2198,273,2498,21,"PLD-4238",-24.11,0.12,"Charred Remain","intcal13",3
 2199,273,2515,22,"PLD-4239",-26.31,0.15,"Charred Remain","intcal13",3
 2200,273,2534,22,"PLD-4240",-25.24,0.13,"Charred Remain","intcal13",3
 2201,273,2538,22,"PLD-4241",-24.22,0.12,"Charred Remain","intcal13",3
@@ -1248,7 +1241,6 @@
 2203,273,2517,22,"PLD-4243",-26.03,0.12,"Charred Remain","intcal13",3
 2204,273,2529,22,"PLD-4244",-24.72,0.14,"Charred Remain","intcal13",3
 2207,273,2520,24,"PLD-4247",-26.23,0.16,"Charred Remain","intcal13",3
-2208,273,2499,23,"PLD-4248",-25.27,0.13,"Charred Remain","intcal13",3
 2209,273,2538,24,"PLD-4249",-26.99,0.19,"Charred Remain","intcal13",3
 2210,273,2507,22,"PLD-4250",-25.83,0.13,"Charred Remain","intcal13",3
 2211,273,2538,23,"PLD-4251",-24.2,0.16,"Charred Remain","intcal13",3
@@ -1291,7 +1283,6 @@
 2277,347,2507,26,"PLD-9633",-25.51,0.17,"Charred Remain","intcal13",3
 2278,347,3657,29,"PLD-9634",-27.11,0.17,"Charred Remain","intcal13",3
 2283,348,2500,31,"IAAA-82877",-26.15,0.26,"Charred Remain","intcal13",3
-2288,348,2409,30,"IAAA-91165",-30.22,0.39,"Charred Remain","intcal13",3
 2302,348,2510,32,"IAAA-92310",-27.2,0.37,"Charred Remain","intcal13",3
 2304,348,2577,33,"IAAA-92312",-26.58,0.29,"Charred Remain","intcal13",3
 2305,349,3804,33,"IAAA-92721",-25.64,0.38,"Charred Remain","intcal13",3
