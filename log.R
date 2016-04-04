@@ -80,12 +80,12 @@ dev.print(device=pdf,"./figure1.pdf")
 ### Retreive Sample Sizes ###
 #############################
 nrow(c14dates)
-##Total Sample Size (n=1442) Full Sample
-##Total Sample Size (n=867) Reduced
+##Total Sample Size (n=1433) Full Sample
+##Total Sample Size (n=859) Reduced
 
 table(c14dates$Region)
-##Number of 14C Dates per Region (1=Kanto (n=276) ; 2=Aomori (n=259); 3=Hokkaido (n=332)) Reduced
-##Number of 14C Dates per Region (1=Kanto (n=406) ; 2=Aomori (n=432); 3=Hokkaido (n=604)) Full Sample
+##Number of 14C Dates per Region (1=Kanto (n=276) ; 2=Aomori (n=259); 3=Hokkaido (n=324)) Reduced
+##Number of 14C Dates per Region (1=Kanto (n=406) ; 2=Aomori (n=432); 3=Hokkaido (n=595)) Full Sample
 
 c14dates.kanto=subset(c14dates,Region==1)
 c14dates.aomori=subset(c14dates,Region==2)
@@ -97,7 +97,7 @@ length(unique(c14dates.kanto$SiteID))
 ## n=47 Full Sample
 length(unique(c14dates.aomori$SiteID))
 ## n=48 Reduced
-## n=57 Full Sample 
+## n=58 Full Sample 
 length(unique(c14dates.hokkaido$SiteID))
 ## n=71 Reduced
 ## n=82 Full Sample
@@ -114,10 +114,10 @@ length(unique(bins.kanto))
 ##Kanto nb=87 Full Sample
 length(unique(bins.aomori))
 ##Aomori nb=90 Reduced
-##Aomori nb=129 Full Sample
+##Aomori nb=128 Full Sample
 length(unique(bins.hokkaido))
-##Hokkaido nb=137 Reduced
-##Hokkaido nb=187 Full Sample
+##Hokkaido nb=136 Reduced
+##Hokkaido nb=186 Full Sample
 
 ################################################################
 ### SPD Analysis Part 1: Exponential and Uniform Null Models ###
