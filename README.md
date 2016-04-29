@@ -1,7 +1,7 @@
 # Source Codes, Scripts, and Data for the paper "Summed Probability Distribution of 14C Dates suggests Regional Divergences in the Population Dynamics of the Jomon Period in Eastern Japan" by Crema, E.R., Habu, J., Kobayashi, K., and Madella, M.
 
 ## Paper Reference 
-Crema, E. R., Habu, J., Kobayashi, K. and Madella, M. (2016). Summed Probability Distribution of 14 C Dates Suggests Regional Divergences in the Population Dynamics of the Jomon Period in Eastern Japan. PLOS ONE 11: e0154809.
+Crema, E. R., Habu, J., Kobayashi, K. and Madella, M. (2016). Summed Probability Distribution of 14 C Dates Suggests Regional Divergences in the Population Dynamics of the Jomon Period in Eastern Japan. PLOS ONE 11: e0154809. http://dx.doi.org/10.1371/journal.pone.0154809
 
 ## Author of the Repository:
 Enrico R. Crema (enrico.crema@gmail.com)
