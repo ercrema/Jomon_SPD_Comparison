@@ -187,7 +187,7 @@ nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=
             if (model=="exponential")
                 {randomDates<-round(sample(time,size=length(unique(bins)),prob=pweights))}        
             randomSDs<-sample(size=length(randomDates),error,replace=TRUE)
-            simDates<-round(uncalibrate(randomDates,randomSDs,random=TRUE)[,2:3])
+            simDates<-round(uncalibrate(randomDates,randomSDs,random=TRUE)[,c(4,3)])
             randomDates<-simDates[,1]
             randomSDs<-simDates[,2]
             
