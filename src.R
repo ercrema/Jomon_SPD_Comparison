@@ -72,8 +72,9 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
 {
     require(Bchron) # Bchron v4.0 
     pathToCalCurves=system.file("data", package = "Bchron")
-    calCurveFile = paste(pathToCalCurves, "/", calCurves,".txt.gz", sep = "")
-    calcurve=as.matrix(read.table(calCurveFile))[,1:3]
+    calCurveFile<-paste(pathToCalCurves, "/", calCurves,".rda", sep = "")
+    calCurveName = load(calCurveFile)
+    calcurve=get(calCurveName)[,1:3]
     colnames(calcurve) <- c("CALBP", "C14BP", "Error")
 
     ## uncalibrate CAL BP dates, interpolating with approx
@@ -81,9 +82,10 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
     colnames(dates) <- c("CALBP", "C14BP")
     calcurve.error <- approx(calcurve[,c(1,3)], xout = dates$CALBP)$y
     dates$Error <- sqrt(error^2 + calcurve.error^2)
+    dates$C14BP=round(rnorm(nrow(dates),mean=dates$C14BP,sd=dates$Error))
     if(random==TRUE){
-	    while(any(dates$C14.Age<0))
-		    {dates$C14.Age=round(rnorm(nrow(dates),mean=dates$C14BP,sd=dates$Error))}
+	    while(any(dates$C14BP<0))
+		    {dates$C14BP=round(rnorm(nrow(dates),mean=dates$C14BP,sd=dates$Error))}
     }
     return(dates)
 }
