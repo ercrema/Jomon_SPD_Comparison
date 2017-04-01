@@ -112,7 +112,7 @@ nullTest<-function(bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,calCurves,nsim=
     require(Bchron) # Bchron v4.0 
 
     ##Calibrate for each Date
-    tmp=calibrate(date=0,error=0,timeRange=yearRange) #retrieve size of the matrix
+    tmp=calibrate(date=1000,error=10,timeRange=yearRange) #retrieve size of the matrix
     individualDatesMatrix<-matrix(NA,nrow=nrow(tmp),ncol=length(date))
 
     print("Calibrating Individual Dates...")
@@ -268,7 +268,7 @@ permutationTest<-function(regions,bins,date,error,DeltaR=0,DeltaRsd=0,yearRange,
         require(Bchron) # Bchron v4.0
         
         ##Execute Calibration for Each Date
-        tmp=calibrate(date=0,error=0,timeRange=yearRange) #retrieve size of the matrix
+        tmp=calibrate(date=1000,error=0,timeRange=yearRange) #retrieve size of the matrix
         individualDatesMatrix<-matrix(NA,nrow=nrow(tmp),ncol=length(date))
 
         print("Calibrating Individual Dates...")
