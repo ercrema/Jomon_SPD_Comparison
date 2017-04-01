@@ -81,7 +81,10 @@ uncalibrate<-function(dates,error,calCurves='intcal13',random=TRUE)
     colnames(dates) <- c("CALBP", "C14BP")
     calcurve.error <- approx(calcurve[,c(1,3)], xout = dates$CALBP)$y
     dates$Error <- sqrt(error^2 + calcurve.error^2)
-    if(random==TRUE){dates$C14.Age=round(rnorm(nrow(dates),mean=dates$C14BP,sd=dates$Error))}
+    if(random==TRUE){
+	    while(any(dates$C14.Age<0))
+		    {dates$C14.Age=round(rnorm(nrow(dates),mean=dates$C14BP,sd=dates$Error))}
+    }
     return(dates)
 }
 
