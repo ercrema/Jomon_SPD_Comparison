@@ -6,6 +6,9 @@ Crema, E. R., Habu, J., Kobayashi, K. and Madella, M. (2016). Summed Probability
 ## Author of the Repository:
 Enrico R. Crema (enrico.crema@gmail.com)
 
+## NOTE
+**This repository is no longer maintained or updated**. It is **strongly recommended** that users interested in applying the techniques introduced here should **install the _rcarbon_ package** from CRAN (stable version; https://cran.r-project.org/web/packages/rcarbon/index.html) or GitHub (development version; https://github.com/ahb108/rcarbon). 
+
 ## Contents
 * Core and utility R functions for analysis of 14C Summed Probability Distribution, including hypothesis testing against fitted null models (Exponential and Uniform distribution) and a permutation test for comparing two or more observed datasets. 
 * Script for generating figure 1~3 on the paper "Summed Probability Distribution of 14C Dates suggest divergence in the population dynamics of Central and Northern Japan during the Jomon Period"
